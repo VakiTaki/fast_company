@@ -8,17 +8,24 @@ const PartyMsg = ({ numUsers }) => {
           Никто с тобой не тусанет
         </span>
       );
-    let wordSuf;
+    let wordSuf = [];
     if (numUsers >= 5 && numUsers <= 20) {
-      wordSuf = "";
+      wordSuf[0] = "";
+      wordSuf[1] = "е";
     } else {
       const rule = ["2", "3", "4"];
       const numUsersArr = numUsers.toString().split("").reverse();
-      rule.includes(numUsersArr[0]) ? (wordSuf = "а") : (wordSuf = "");
+      if (rule.includes(numUsersArr[0])) {
+        wordSuf[0] = "а";
+        wordSuf[1] = "у";
+      } else {
+        wordSuf[0] = "";
+        wordSuf[1] = "е";
+      }
     }
     return (
       <span className="badge  bg-primary fs-4 m-2">
-        {numUsers} человек{wordSuf} тусанет с тобой сегодня
+        {numUsers} человек{wordSuf[0]} тусан{wordSuf[1]}т с тобой сегодня
       </span>
     );
   };
