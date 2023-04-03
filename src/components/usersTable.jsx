@@ -6,8 +6,12 @@ import PartyMsg from "./partyMsg";
 const UsersTable = (props) => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  function handlerDelite(id) {
+  function handlerDelete(id) {
     setUsers((prev) => prev.filter((user) => user._id !== id));
+  }
+
+  function sortTable() {
+    console.log("ffff");
   }
 
   return (
@@ -17,7 +21,9 @@ const UsersTable = (props) => {
         <table className="table m-2">
           <thead>
             <tr>
-              <th scope="col">Имя</th>
+              <th scope="col" onClick={sortTable}>
+                Имя
+              </th>
               <th scope="col">Качества</th>
               <th scope="col">Профессия</th>
               <th scope="col">Встретился, раз</th>
@@ -27,7 +33,7 @@ const UsersTable = (props) => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <User user={user} key={user._id} onDelite={handlerDelite} />
+              <User user={user} key={user._id} onDelete={handlerDelete} />
             ))}
           </tbody>
         </table>
