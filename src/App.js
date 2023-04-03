@@ -1,8 +1,8 @@
-import User from "./components/user";
+import UserTable from "./components/usersTable";
 
 function App() {
   return (
-    <User />
+    <UserTable />
   );
 }
 
