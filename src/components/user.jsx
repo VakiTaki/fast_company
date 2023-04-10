@@ -1,7 +1,8 @@
 import React from "react";
 import Quality from "./qualities";
+import Bookmark from "./bookmark";
 
-const User = ({ user, onDelete }) => {
+const User = ({ user, onDelete, onToogleBookMark }) => {
   return (
     <tr>
       <td>{user.name}</td>
@@ -13,6 +14,9 @@ const User = ({ user, onDelete }) => {
       <td>{user.profession.name}</td>
       <td>{user.completedMeetings}</td>
       <td>{user.rate}/5</td>
+      <td className="text-center">
+        <Bookmark user={user} onToogleBookMark={onToogleBookMark} />
+      </td>
       <td>
         <button
           type="button"
