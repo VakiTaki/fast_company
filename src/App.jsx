@@ -25,12 +25,14 @@ function App() {
         <div className="container">
             <div className="d-flex justify-content-between">
                 <PartyMsg numUsers={users.length} />
-                <button
-                    className="badge bg-warning fs-4 m-2  text-reset"
-                    onClick={() => setUsers(initialUsers)}
-                >
-                    <i className="bi bi-arrow-clockwise"></i>
-                </button>
+                {!users.length && (
+                    <button
+                        className="badge bg-warning fs-4 m-2  text-reset"
+                        onClick={() => setUsers(initialUsers)}
+                    >
+                        <i className="bi bi-arrow-clockwise"></i>
+                    </button>
+                )}
             </div>
             <UserTable
                 users={users}
