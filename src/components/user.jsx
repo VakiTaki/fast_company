@@ -5,12 +5,14 @@ import PropTypes from "prop-types";
 
 const User = ({ user, onDelete, onToogleBookMark }) => {
     return (
-        <tr>
+        <tr style={{ height: "70px" }}>
             <td>{user.name}</td>
             <td>
-                {user.qualities.map((quality) => (
-                    <Quality quality={quality} key={quality._id} />
-                ))}
+                <div className="container ">
+                    {user.qualities.map((quality) => (
+                        <Quality quality={quality} key={quality._id} />
+                    ))}
+                </div>
             </td>
             <td>{user.profession.name}</td>
             <td>{user.completedMeetings}</td>

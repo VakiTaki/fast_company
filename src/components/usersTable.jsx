@@ -19,31 +19,39 @@ const UsersTable = ({ users, onDelete, onToogleBookMark }) => {
     return (
         <>
             {users.length !== 0 && (
-                <table className="table m-2 align-middle">
-                    <thead>
-                        <tr>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Качества</th>
-                            <th scope="col">Профессия</th>
-                            <th scope="col">Встретился, раз</th>
-                            <th scope="col">Оценка</th>
-                            <th scope="col" className="text-center">
-                                Избранное
-                            </th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userCrop.map((user) => (
-                            <User
-                                user={user}
-                                key={user._id}
-                                onDelete={onDelete}
-                                onToogleBookMark={onToogleBookMark}
-                            />
-                        ))}
-                    </tbody>
-                </table>
+                <div style={{ height: "350px" }}>
+                    <table className="table m-2 align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" style={{ width: "150px" }}>
+                                    Имя
+                                </th>
+                                <th scope="col" style={{ width: "250px" }}>
+                                    Качества
+                                </th>
+                                <th scope="col">Профессия</th>
+                                <th scope="col" style={{ width: "150px" }}>
+                                    Встретился, раз
+                                </th>
+                                <th scope="col">Оценка</th>
+                                <th scope="col" className="text-center">
+                                    Избранное
+                                </th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userCrop.map((user) => (
+                                <User
+                                    user={user}
+                                    key={user._id}
+                                    onDelete={onDelete}
+                                    onToogleBookMark={onToogleBookMark}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
             {!!users.length && (
                 <Pagination

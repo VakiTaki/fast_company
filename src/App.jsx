@@ -4,7 +4,8 @@ import UserTable from "./components/usersTable";
 import PartyMsg from "./components/partyMsg";
 
 function App() {
-    const [users, setUsers] = useState(api.users.fetchAll());
+    const initialUsers = api.users.fetchAll();
+    const [users, setUsers] = useState(initialUsers);
 
     function handlerDelete(id) {
         setUsers((prev) => prev.filter((user) => user._id !== id));
@@ -22,7 +23,15 @@ function App() {
     };
     return (
         <div className="container">
-            <PartyMsg numUsers={users.length} />
+            <div className="d-flex justify-content-between">
+                <PartyMsg numUsers={users.length} />
+                <button
+                    className="badge bg-warning fs-4 m-2  text-reset"
+                    onClick={() => setUsers(initialUsers)}
+                >
+                    <i className="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
             <UserTable
                 users={users}
                 onDelete={handlerDelete}

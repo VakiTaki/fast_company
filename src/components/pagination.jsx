@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
     const pageCount = Math.ceil(itemsCount / pageSize);
-    if (pageCount === 1) return null;
+    // if (pageCount === 1) return null;
     const pages = _.range(1, pageCount + 1);
 
     return (
         <nav>
-            <ul className="pagination">
+            <ul className="pagination justify-content-center">
                 <li
                     className={
                         "page-item " + (currentPage === 1 ? "disabled" : "")
@@ -19,7 +19,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
                         className="page-link"
                         onClick={() => onPageChange(currentPage - 1)}
                     >
-                        Previous
+                        <i className="bi bi-caret-left-fill"></i>
                     </button>
                 </li>
                 {pages.map((page) => (
@@ -48,7 +48,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
                         className="page-link"
                         onClick={() => onPageChange(currentPage + 1)}
                     >
-                        Next
+                        <i className="bi bi-caret-right-fill"></i>
                     </button>
                 </li>
             </ul>

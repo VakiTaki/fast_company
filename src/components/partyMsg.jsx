@@ -26,7 +26,7 @@ const PartyMsg = ({ numUsers }) => {
             }
         }
         return (
-            <span className="badge  bg-primary fs-4 m-2">
+            <span className="badge bg-primary fs-4 m-2">
                 {numUsers} человек{wordSuf[0]} тусан{wordSuf[1]}т с тобой
                 сегодня
             </span>
