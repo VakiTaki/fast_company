@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Quality = ({ quality }) => {
     return (
@@ -8,6 +9,9 @@ const Quality = ({ quality }) => {
             </span>
         </>
     );
+};
+Quality.propTypes = {
+    quality: PropTypes.object.isRequired
 };
 
 export default Quality;

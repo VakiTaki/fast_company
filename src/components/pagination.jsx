@@ -10,6 +10,18 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
     return (
         <nav>
             <ul className="pagination">
+                <li
+                    className={
+                        "page-item " + (currentPage === 1 ? "disabled" : "")
+                    }
+                >
+                    <button
+                        className="page-link"
+                        onClick={() => onPageChange(currentPage - 1)}
+                    >
+                        Previous
+                    </button>
+                </li>
                 {pages.map((page) => (
                     <li
                         className={
@@ -26,6 +38,19 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
                         </button>
                     </li>
                 ))}
+                <li
+                    className={
+                        "page-item " +
+                        (currentPage === pages.length ? "disabled" : "")
+                    }
+                >
+                    <button
+                        className="page-link"
+                        onClick={() => onPageChange(currentPage + 1)}
+                    >
+                        Next
+                    </button>
+                </li>
             </ul>
         </nav>
     );

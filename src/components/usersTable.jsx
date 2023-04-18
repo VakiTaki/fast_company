@@ -13,7 +13,7 @@ const UsersTable = ({ users, onDelete, onToogleBookMark }) => {
     };
 
     const userCrop = paginate(users, currentPage, pageSize);
-    if (!userCrop && currentPage !== 1) {
+    if (!userCrop.length && currentPage !== 1) {
         setCurrentPage((prev) => prev - 1);
     }
     return (
@@ -45,12 +45,14 @@ const UsersTable = ({ users, onDelete, onToogleBookMark }) => {
                     </tbody>
                 </table>
             )}
-            <Pagination
-                itemsCount={count}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-            />
+            {!!users.length && (
+                <Pagination
+                    itemsCount={count}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </>
     );
 };
