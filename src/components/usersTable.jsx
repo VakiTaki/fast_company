@@ -23,7 +23,7 @@ const UsersTable = ({ users, onDelete, onToogleBookMark }) => {
                     <table className="table m-2 align-middle">
                         <thead>
                             <tr>
-                                <th scope="col" style={{ width: "150px" }}>
+                                <th scope="col" style={{ width: "110px" }}>
                                     Имя
                                 </th>
                                 <th scope="col" style={{ width: "250px" }}>
