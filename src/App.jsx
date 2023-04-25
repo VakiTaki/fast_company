@@ -4,8 +4,7 @@ import UserTable from "./components/usersTable";
 function App() {
     return (
         <div className="container">
-            {" "}
-            <UserTable />{" "}
+            <UserTable />
         </div>
     );
 }
