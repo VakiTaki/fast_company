@@ -48,6 +48,16 @@ const UsersTable = () => {
             : setSelectedProf(item);
         setCurrentPage(1);
     };
+    const handleResetUsers = () => {
+        setProfessions();
+        api.users.fetchAll().then((data) => setUsers(data));
+        api.professions.fetchAll().then((data) =>
+            setProfessions({
+                ...data,
+                allProfession
+            })
+        );
+    };
     const filterUsers =
         selectedProf._id !== allProfession._id
             ? users.filter((user) => user.profession._id === selectedProf._id)
@@ -67,11 +77,7 @@ const UsersTable = () => {
                             <button
                                 type="button"
                                 className="btn btn-warning"
-                                onClick={() =>
-                                    api.users
-                                        .fetchAll()
-                                        .then((data) => setUsers(data))
-                                }
+                                onClick={handleResetUsers}
                             >
                                 Reset
                             </button>
