@@ -20,8 +20,8 @@ const UsersTable = () => {
     useEffect(() => {
         api.professions.fetchAll().then((data) =>
             setProfessions({
-                allProfession,
-                ...data
+                ...data,
+                allProfession
             })
         );
         api.users.fetchAll().then((data) => setUsers(data));
@@ -43,14 +43,14 @@ const UsersTable = () => {
         );
     };
     const handleProfessionSelect = (item) => {
-        selectedProf && item === selectedProf
+        selectedProf && item._id === selectedProf._id
             ? setSelectedProf(allProfession)
             : setSelectedProf(item);
         setCurrentPage(1);
     };
     const filterUsers =
         selectedProf._id !== allProfession._id
-            ? users.filter((user) => user.profession === selectedProf)
+            ? users.filter((user) => user.profession._id === selectedProf._id)
             : users;
     const count = filterUsers.length;
     const userCrop = paginate(filterUsers, currentPage, pageSize);
@@ -75,9 +75,9 @@ const UsersTable = () => {
                         {filterUsers.length !== 0 && (
                             <div>
                                 <div
-                                    style={{
-                                        height: `${(pageSize + 1) * 90}px`
-                                    }}
+                                // style={{
+                                //     height: `${(pageSize + 1) * 90}px`
+                                // }}
                                 >
                                     <table className="table m-2 align-middle">
                                         <thead>

@@ -1,26 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function GroupList({
-    items,
-    onItemSelect,
-    valueProp,
-    contentProp,
-    selectedProf
-}) {
+function GroupList({ items, onItemSelect, selectedProf }) {
+    let itemList = [];
+    typeof items === "object" ? (itemList = Object.values(items)) : items;
+    itemList.sort(function (a, b) {
+        return parseFloat(a._id) - parseFloat(b._id);
+    });
+
     return (
         <ul className="list-group me-2 mt-2">
-            {Object.keys(items).map((item) => (
+            {itemList.map((item) => (
                 <li
                     className={
                         "list-group-item" +
-                        (items[item]._id === selectedProf._id ? " active" : "")
+                        (item._id === selectedProf._id ? " active" : "")
                     }
-                    key={items[item][valueProp]}
-                    onClick={() => onItemSelect(items[item])}
+                    key={item._id}
+                    onClick={() => onItemSelect(item)}
                     role="button"
                 >
-                    {items[item][contentProp]}
+                    {item.name}
                 </li>
             ))}
         </ul>
@@ -31,10 +31,10 @@ GroupList.defaultProps = {
     contentProp: "name"
 };
 GroupList.propTypes = {
-    items: PropTypes.object,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     onItemSelect: PropTypes.func.isRequired,
-    valueProp: PropTypes.string.isRequired,
-    contentProp: PropTypes.string.isRequired,
+    valueProp: PropTypes.string,
+    contentProp: PropTypes.string,
     selectedProf: PropTypes.object
 };
 
