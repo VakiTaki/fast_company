@@ -10,11 +10,15 @@ import Loader from "./loader";
 const UsersTable = () => {
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
-    const pageSize = 4;
+    const pageSize = 1;
     const [selectedProf, setSelectedProf] = useState({
         name: "Все профессии",
         _id: "0"
     });
+    const profListinUsers = [
+        ...new Set(users.map((user) => user.profession._id))
+    ];
+    profListinUsers.push("0");
     const [currentPage, setCurrentPage] = useState(1);
     const [professoins, setProfessions] = useState();
     useEffect(() => {
@@ -67,6 +71,9 @@ const UsersTable = () => {
     if (!userCrop.length && currentPage !== 1) {
         setCurrentPage((prev) => prev - 1);
     }
+    useEffect(() => {
+        setSelectedProf(allProfession);
+    }, [profListinUsers.length]);
     return (
         <>
             {users && professoins ? (
@@ -89,6 +96,7 @@ const UsersTable = () => {
                                 items={professoins}
                                 onItemSelect={handleProfessionSelect}
                                 selectedProf={selectedProf}
+                                profListinUsers={profListinUsers}
                             />
                         )}
                         {filterUsers.length !== 0 && (
