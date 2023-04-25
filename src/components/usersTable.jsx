@@ -10,7 +10,7 @@ import Loader from "./loader";
 const UsersTable = () => {
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
-    const pageSize = 1;
+    const pageSize = 4;
     const [selectedProf, setSelectedProf] = useState({
         name: "Все профессии",
         _id: "0"
