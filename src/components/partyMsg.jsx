@@ -5,7 +5,7 @@ const PartyMsg = ({ numUsers }) => {
     const rednerPhrase = (numUsers) => {
         if (numUsers === 0) {
             return (
-                <span className="badge  bg-danger fs-4 m-2">
+                <span className="badge  bg-danger fs-4">
                     Никто с тобой не тусанет
                 </span>
             );
@@ -26,7 +26,7 @@ const PartyMsg = ({ numUsers }) => {
             }
         }
         return (
-            <span className="badge bg-primary fs-4 m-2">
+            <span className="badge bg-primary fs-4">
                 {numUsers} человек{wordSuf[0]} тусан{wordSuf[1]}т с тобой
                 сегодня
             </span>

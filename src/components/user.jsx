@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const User = ({ user, onDelete, onToogleBookMark }) => {
     return (
-        <tr style={{ height: "70px" }}>
+        <tr style={{ height: "90px" }}>
             <td>{user.name}</td>
             <td>
                 <div className="container ">

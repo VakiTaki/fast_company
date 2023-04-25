@@ -22,12 +22,6 @@
         "eject": "react-scripts eject",
         "format": "npx prettier --write ."
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
     "browserslist": {
         "production": [
             ">0.2%",
@@ -39,13 +33,5 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "devDependencies": {
-        "eslint": "^8.0.1",
-        "eslint-config-standard": "^17.0.0",
-        "eslint-plugin-import": "^2.25.2",
-        "eslint-plugin-n": "^15.0.0",
-        "eslint-plugin-promise": "^6.0.0",
-        "eslint-plugin-react": "^7.32.2"
     }
 }
