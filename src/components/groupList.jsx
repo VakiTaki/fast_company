@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function GroupList({ items, onItemSelect, selectedProf }) {
-    let itemList = [];
-    typeof items === "object" ? (itemList = Object.values(items)) : items;
+    const itemList = typeof items === "object" ? Object.values(items) : items;
     itemList.sort(function (a, b) {
         return parseFloat(a._id) - parseFloat(b._id);
     });
