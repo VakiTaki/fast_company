@@ -61,7 +61,22 @@ const UsersTable = () => {
         <>
             {users && professoins ? (
                 <div className="mt-2">
-                    <PartyMsg numUsers={filterUsers.length} />
+                    <div className="d-flex justify-content-between">
+                        <PartyMsg numUsers={filterUsers.length} />
+                        {users.length === 0 && (
+                            <button
+                                type="button"
+                                className="btn btn-warning"
+                                onClick={() =>
+                                    api.users
+                                        .fetchAll()
+                                        .then((data) => setUsers(data))
+                                }
+                            >
+                                Reset
+                            </button>
+                        )}
+                    </div>
                     <div className="d-flex">
                         {professoins && users.length !== 0 && (
                             <GroupList
