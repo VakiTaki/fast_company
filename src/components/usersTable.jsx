@@ -62,16 +62,14 @@ const UsersTable = () => {
             {users && professoins ? (
                 <div className="mt-2">
                     <PartyMsg numUsers={filterUsers.length} />
-
                     <div className="d-flex">
-                        {professoins && (
+                        {professoins && users.length !== 0 && (
                             <GroupList
                                 items={professoins}
                                 onItemSelect={handleProfessionSelect}
                                 selectedProf={selectedProf}
                             />
                         )}
-
                         {filterUsers.length !== 0 && (
                             <div>
                                 <div
