@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes, { string } from "prop-types";
 
 function GroupList({ items, onItemSelect, selectedProf, profListinUsers }) {
-    let itemList = typeof items === "object" ? Object.values(items) : items;
-    itemList.sort(function (a, b) {
-        return parseFloat(a._id) - parseFloat(b._id);
-    });
-    itemList = itemList.filter((item) => profListinUsers.includes(item._id));
+    const itemList = Object.values(items)
+        .sort(function (a, b) {
+            return parseInt(a._id) - parseInt(b._id);
+        })
+        .filter((item) => profListinUsers.includes(item._id));
     return (
         <ul className="list-group me-2 mt-2">
             {itemList.map((item) => (

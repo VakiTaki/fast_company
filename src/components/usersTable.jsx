@@ -57,8 +57,8 @@ const UsersTable = () => {
         api.users.fetchAll().then((data) => setUsers(data));
         api.professions.fetchAll().then((data) =>
             setProfessions({
-                ...data,
-                allProfession
+                allProfession,
+                ...data
             })
         );
     };
@@ -68,9 +68,11 @@ const UsersTable = () => {
             : users;
     const count = filterUsers.length;
     const userCrop = paginate(filterUsers, currentPage, pageSize);
-    if (!userCrop.length && currentPage !== 1) {
-        setCurrentPage((prev) => prev - 1);
-    }
+    useEffect(() => {
+        if (!userCrop.length && currentPage !== 1) {
+            setCurrentPage((prev) => prev - 1);
+        }
+    }, [users]);
     useEffect(() => {
         setSelectedProf(allProfession);
     }, [profListinUsers.length]);
