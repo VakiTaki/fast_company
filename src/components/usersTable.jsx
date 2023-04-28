@@ -15,10 +15,14 @@ const UsersTable = () => {
         name: "Все профессии",
         _id: "0"
     });
-    const profListinUsers = [
-        ...new Set(users.map((user) => user.profession._id))
-    ];
-    profListinUsers.push("0");
+    // уникальный список айди профессий в users
+    const [profListinUsers, setProfListinUser] = useState(["0"]);
+    useEffect(() => {
+        setProfListinUser([
+            "0",
+            ...new Set(users.map((user) => user.profession._id))
+        ]);
+    }, [users.length]);
     const [currentPage, setCurrentPage] = useState(1);
     const [professoins, setProfessions] = useState();
     useEffect(() => {
