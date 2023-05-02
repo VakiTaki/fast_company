@@ -5,6 +5,7 @@ import TableBody from "./tableBody";
 import Bookmark from "./bookmark";
 import QualityList from "./qualityList";
 import Table from "./table";
+import DeleteBtn from "./deleteBtn";
 
 function UsersTable({
     userCrop,
@@ -33,31 +34,14 @@ function UsersTable({
             )
         },
         delete: {
-            component: (user) => (
-                <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => onDelete(user._id)}
-                >
-                    Delete
-                </button>
-            )
+            component: (user) => <DeleteBtn onDelete={onDelete} user={user} />
         }
     };
-    const handleSort = (prop) => {
-        if (selectedSort.iter === prop) {
-            onSort({
-                ...selectedSort,
-                order: selectedSort.order === "asc" ? "desc" : "asc"
-            });
-        } else {
-            onSort({ iter: prop, order: "asc" });
-        }
-    };
+
     return (
-        <Table onSort={handleSort} columns={columns} data={userCrop}>
+        <Table onSort={onSort} columns={columns} data={userCrop}>
             <TableHeader
-                onSort={handleSort}
+                onSort={onSort}
                 columns={columns}
                 selectedSort={selectedSort}
             />

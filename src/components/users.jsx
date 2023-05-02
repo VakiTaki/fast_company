@@ -68,7 +68,16 @@ const Users = () => {
             })
         );
     };
-
+    const handleSort = (prop) => {
+        if (sortBy.iter === prop) {
+            setSortBy((prev) => ({
+                ...prev,
+                order: prev.order === "asc" ? "desc" : "asc"
+            }));
+        } else {
+            setSortBy({ iter: prop, order: "asc" });
+        }
+    };
     const filterUsers =
         selectedProf._id !== allProfession._id
             ? users.filter((user) => user.profession._id === selectedProf._id)
@@ -116,7 +125,7 @@ const Users = () => {
                                         userCrop={userCrop}
                                         onDelete={handlerDelete}
                                         onToogleBookmark={handleToogleBookmark}
-                                        onSort={setSortBy}
+                                        onSort={handleSort}
                                         selectedSort={sortBy}
                                         user={users}
                                     />
