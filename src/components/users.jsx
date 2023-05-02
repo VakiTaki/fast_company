@@ -6,10 +6,12 @@ import api from "../api";
 import PartyMsg from "./partyMsg";
 import Loader from "./loader";
 import UsersTable from "./usersTable";
+import _ from "lodash";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const pageSize = 4;
     const [selectedProf, setSelectedProf] = useState({
         name: "Все профессии",
@@ -40,7 +42,7 @@ const Users = () => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-    const handleToogleBookMark = (id) => {
+    const handleToogleBookmark = (id) => {
         setUsers((prev) =>
             prev.map((user) => {
                 if (user._id === id) {
@@ -66,12 +68,14 @@ const Users = () => {
             })
         );
     };
+
     const filterUsers =
         selectedProf._id !== allProfession._id
             ? users.filter((user) => user.profession._id === selectedProf._id)
             : users;
     const count = filterUsers.length;
-    const userCrop = paginate(filterUsers, currentPage, pageSize);
+    const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
+    const userCrop = paginate(sortedUsers, currentPage, pageSize);
     useEffect(() => {
         if (!userCrop.length && currentPage !== 1) {
             setCurrentPage((prev) => prev - 1);
@@ -111,7 +115,10 @@ const Users = () => {
                                     <UsersTable
                                         userCrop={userCrop}
                                         onDelete={handlerDelete}
-                                        onToogleBookmark={handleToogleBookMark}
+                                        onToogleBookmark={handleToogleBookmark}
+                                        onSort={setSortBy}
+                                        selectedSort={sortBy}
+                                        user={users}
                                     />
                                 </div>
                                 {!!filterUsers.length && (

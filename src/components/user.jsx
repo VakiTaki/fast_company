@@ -1,9 +1,9 @@
 import React from "react";
-import Quality from "./qualities";
+import Quality from "./quality";
 import Bookmark from "./bookmark";
 import PropTypes from "prop-types";
 
-const User = ({ user, onDelete, onToogleBookMark }) => {
+const User = ({ user, onDelete, onToogleBookmark }) => {
     return (
         <tr style={{ height: "90px" }}>
             <td>{user.name}</td>
@@ -18,7 +18,7 @@ const User = ({ user, onDelete, onToogleBookMark }) => {
             <td>{user.completedMeetings}</td>
             <td>{user.rate}/5</td>
             <td className="text-center">
-                <Bookmark user={user} onToogleBookMark={onToogleBookMark} />
+                <Bookmark user={user} onToogleBookmark={onToogleBookmark} />
             </td>
             <td>
                 <button
@@ -36,7 +36,7 @@ const User = ({ user, onDelete, onToogleBookMark }) => {
 User.propTypes = {
     user: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
-    onToogleBookMark: PropTypes.func.isRequired
+    onToogleBookmark: PropTypes.func.isRequired
 };
 
 export default User;
