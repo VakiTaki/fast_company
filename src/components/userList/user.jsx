@@ -1,6 +1,6 @@
 import React from "react";
-import Quality from "./quality";
-import Bookmark from "./bookmark";
+import Quality from "../tableElements/quality";
+import Bookmark from "../tableElements/bookmark";
 import PropTypes from "prop-types";
 
 const User = ({ user, onDelete, onToogleBookmark }) => {

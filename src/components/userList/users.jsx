@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "./pagination";
-import { paginate } from "../utils/paginate";
-import GroupList from "./groupList";
-import api from "../api";
+import Pagination from "../tableElements/pagination";
+import { paginate } from "../../utils/paginate";
+import GroupList from "../tableElements/groupList";
+import api from "../../api";
 import PartyMsg from "./partyMsg";
-import Loader from "./loader";
+import Loader from "../tableElements/loader";
 import UsersTable from "./usersTable";
 import _ from "lodash";
 

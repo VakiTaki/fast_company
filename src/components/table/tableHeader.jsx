@@ -2,6 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function TableHeader({ onSort, columns, selectedSort }) {
+    const renderArrow = (path) =>
+        path === selectedSort.iter ? (
+            <i
+                className={`bi bi-caret-${
+                    selectedSort.order === "asc" ? "down" : "up"
+                }-fill`}
+            ></i>
+        ) : null;
     return (
         <thead>
             <tr>
@@ -19,15 +27,7 @@ function TableHeader({ onSort, columns, selectedSort }) {
                     >
                         <div className="d-flex">
                             {columns[column].name}
-                            {columns[column].path === selectedSort.iter ? (
-                                <i
-                                    className={`bi bi-caret-${
-                                        selectedSort.order === "asc"
-                                            ? "down"
-                                            : "up"
-                                    }-fill`}
-                                ></i>
-                            ) : null}
+                            {renderArrow(columns[column].path)}
                         </div>
                     </th>
                 ))}

@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import Bookmark from "./bookmark";
-import QualityList from "./qualityList";
-import Table from "./table";
-import DeleteBtn from "./deleteBtn";
+import TableHeader from "../table/tableHeader";
+import TableBody from "../table/tableBody";
+import Bookmark from "../tableElements/bookmark";
+import QualityList from "../tableElements/qualityList";
+import Table from "../table/table";
+import DeleteBtn from "../tableElements/deleteBtn";
 
 function UsersTable({
     userCrop,
