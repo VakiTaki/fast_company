@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
-import UsersRoute from "./layouts/usersRoute";
+import Users from "./layouts/users";
 
 function App() {
     return (
@@ -30,7 +30,7 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={Main} />
                     <Route path="/login" component={Login} />
-                    <Route path="/users/:id?" component={UsersRoute} />
+                    <Route path="/users/:id?" component={Users} />
                     <Redirect to="/" />
                 </Switch>
             </main>

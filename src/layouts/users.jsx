@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "../tableElements/pagination";
-import { paginate } from "../../utils/paginate";
-import GroupList from "../tableElements/groupList";
-import api from "../../api";
-import PartyMsg from "./partyMsg";
-import Loader from "../tableElements/loader";
-import UsersTable from "./usersTable";
+import Pagination from "../components/tableElements/pagination";
+import { paginate } from "../utils/paginate";
+import GroupList from "../components/tableElements/groupList";
+import api from "../api";
+import PartyMsg from "../components/userList/partyMsg";
+import Loader from "../components/tableElements/loader";
+import UsersTable from "../components/userList/usersTable";
 import _ from "lodash";
+import { useParams } from "react-router-dom";
+import UserInfo from "../components/userList/userInfo";
 
 const Users = () => {
+    const { id } = useParams();
+    console.log(id);
+    if (id) return <UserInfo id={id} />;
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });

@@ -22,14 +22,14 @@ function UserInfo({ id }) {
                     <h6>Профессия: {user.profession.name}</h6>
                     <QualityList qualities={user.qualities} />
                     <p className="mt-3">
-                        Rоличество встреч: {user.completedMeetings}
+                        Kоличество встреч: {user.completedMeetings}
                     </p>
                     <p>Рейтинг: {user.rate}/5</p>
                 </div>
             ) : (
                 <Loader />
             )}
-            <button onClick={handleToUserList} className="btn btn-warning mt-2">
+            <button onClick={handleToUserList} className="btn btn-primary mt-2">
                 К списку пользователей
             </button>
         </>
