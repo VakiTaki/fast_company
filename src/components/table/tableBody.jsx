@@ -13,6 +13,7 @@ function TableBody({ data, columns }) {
         }
         return _.get(item, columns[column].path);
     };
+
     return (
         <tbody>
             {data.map((item) => (

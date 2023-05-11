@@ -6,6 +6,7 @@ import Bookmark from "../tableElements/bookmark";
 import QualityList from "../tableElements/qualityList";
 import Table from "../table/table";
 import DeleteBtn from "../tableElements/deleteBtn";
+import { Link } from "react-router-dom";
 
 function UsersTable({
     userCrop,
@@ -15,7 +16,15 @@ function UsersTable({
     selectedSort
 }) {
     const columns = {
-        name: { path: "name", name: "Имя" },
+        name: {
+            path: "name",
+            name: "Имя",
+            component: (user) => (
+                <Link className="nav-link" to={`/users/${user._id}`}>
+                    {user.name}
+                </Link>
+            )
+        },
         qualities: {
             name: "Качества",
             component: (user) => <QualityList qualities={user.qualities} />
