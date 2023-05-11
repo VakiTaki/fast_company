@@ -11,9 +11,6 @@ import { useParams } from "react-router-dom";
 import UserInfo from "../components/userList/userInfo";
 
 const Users = () => {
-    const { id } = useParams();
-    console.log(id);
-    if (id) return <UserInfo id={id} />;
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
@@ -22,6 +19,7 @@ const Users = () => {
         name: "Все профессии",
         _id: "0"
     });
+
     // уникальный список айди профессий в users
     const [profListinUsers, setProfListinUser] = useState(["0"]);
     useEffect(() => {
@@ -98,6 +96,8 @@ const Users = () => {
     useEffect(() => {
         setSelectedProf(allProfession);
     }, [profListinUsers.length]);
+    const { id } = useParams();
+    if (id) return <UserInfo id={id} />;
     return (
         <>
             {users && professoins ? (
