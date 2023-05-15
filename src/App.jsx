@@ -6,7 +6,6 @@ import Users from "./layouts/users";
 import NavBar from "./components/navBar/navBar";
 
 function App() {
-    console.log("kdjdk");
     return (
         <div className="container">
             <header>
