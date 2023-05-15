@@ -1,30 +1,15 @@
 import React from "react";
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
 import Users from "./layouts/users";
+import NavBar from "./components/navBar/navBar";
 
 function App() {
     return (
         <div className="container">
             <header>
-                <ul className="nav">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/">
-                            Main
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">
-                            Login
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/users">
-                            Users
-                        </Link>
-                    </li>
-                </ul>
+                <NavBar />
             </header>
             <main>
                 <Switch>
