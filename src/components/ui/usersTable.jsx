@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "../table/tableHeader";
-import TableBody from "../table/tableBody";
-import Bookmark from "../tableElements/bookmark";
-import QualityList from "../tableElements/qualityList";
-import Table from "../table/table";
-import DeleteBtn from "../tableElements/deleteBtn";
+import TableHeader from "../common/table/tableHeader";
+import TableBody from "../common/table/tableBody";
+import Bookmark from "../common/bookmark";
+import Qualities from "./qualities";
+import Table from "../common/table";
+import DeleteBtn from "../common/deleteBtn";
 import { Link } from "react-router-dom";
 
 function UsersTable({
@@ -30,7 +30,7 @@ function UsersTable({
         },
         qualities: {
             name: "Качества",
-            component: (user) => <QualityList qualities={user.qualities} />
+            component: (user) => <Qualities qualities={user.qualities} />
         },
         profession: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
