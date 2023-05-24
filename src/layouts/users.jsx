@@ -21,7 +21,6 @@ const Users = () => {
         name: "Все профессии",
         _id: "0"
     });
-
     // уникальный список айди профессий в users
     const [profListinUsers, setProfListinUser] = useState(["0"]);
     useEffect(() => {
@@ -89,16 +88,16 @@ const Users = () => {
         setCurrentPage(1);
         setSearchText(e.target.value);
     };
-    const filterUsers =
-        selectedProf._id !== allProfession._id
-            ? users.filter((user) => user.profession._id === selectedProf._id)
-            : users;
+    const filterUsers = searchText.trim()
+        ? users.filter((user) =>
+              user.name.toLowerCase().includes(searchText.trim().toLowerCase())
+          )
+        : selectedProf._id !== allProfession._id
+        ? users.filter((user) => user.profession._id === selectedProf._id)
+        : users;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
-    const searchedUsers = sortedUsers.filter((user) =>
-        user.name.toLowerCase().includes(searchText.trim().toLowerCase())
-    );
-    const count = searchedUsers.length;
-    const userCrop = paginate(searchedUsers, currentPage, pageSize);
+    const count = sortedUsers.length;
+    const userCrop = paginate(sortedUsers, currentPage, pageSize);
     useEffect(() => {
         if (!userCrop.length && currentPage !== 1) {
             setCurrentPage((prev) => prev - 1);
@@ -107,7 +106,6 @@ const Users = () => {
     useEffect(() => {
         setSelectedProf(allProfession);
     }, [profListinUsers.length]);
-
     const { id } = useParams();
     if (id) return <UserInfo id={id} />;
     return (
@@ -116,7 +114,7 @@ const Users = () => {
                 <div className="mt-2">
                     <div className="d-flex justify-content-between">
                         <PartyMsg numUsers={count} />
-                        {users.length === 0 && (
+                        {!users.length && (
                             <button
                                 type="button"
                                 className="btn btn-warning"
@@ -127,41 +125,42 @@ const Users = () => {
                         )}
                     </div>
                     <div className="d-flex">
-                        {professoins && users.length !== 0 && (
-                            <GroupList
-                                items={professoins}
-                                onItemSelect={handleProfessionSelect}
-                                selectedProf={selectedProf}
-                                profListinUsers={profListinUsers}
-                            />
-                        )}
-                        {filterUsers.length !== 0 && (
-                            <div>
-                                <div className="mt-2">
-                                    <TextField
-                                        type={"search"}
-                                        placeholder={"Поиск по имени"}
-                                        onChange={handleSearch}
-                                        value={searchText}
-                                    />
-                                    <UsersTable
-                                        userCrop={userCrop}
-                                        onDelete={handlerDelete}
-                                        onToogleBookmark={handleToogleBookmark}
-                                        onSort={handleSort}
-                                        selectedSort={sortBy}
-                                        user={users}
-                                    />
-                                </div>
-                                {!!filterUsers.length && (
+                        {!!users.length && (
+                            <>
+                                <GroupList
+                                    items={professoins}
+                                    onItemSelect={handleProfessionSelect}
+                                    selectedProf={selectedProf}
+                                    profListinUsers={profListinUsers}
+                                />
+
+                                <div>
+                                    <div className="mt-2">
+                                        <TextField
+                                            type={"search"}
+                                            placeholder={"Поиск по имени"}
+                                            onChange={handleSearch}
+                                            value={searchText}
+                                        />
+                                        <UsersTable
+                                            userCrop={userCrop}
+                                            onDelete={handlerDelete}
+                                            onToogleBookmark={
+                                                handleToogleBookmark
+                                            }
+                                            onSort={handleSort}
+                                            selectedSort={sortBy}
+                                            user={users}
+                                        />
+                                    </div>
                                     <Pagination
                                         itemsCount={count}
                                         pageSize={pageSize}
                                         currentPage={currentPage}
                                         onPageChange={handlePageChange}
                                     />
-                                )}
-                            </div>
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
