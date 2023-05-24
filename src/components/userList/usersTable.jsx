@@ -48,14 +48,16 @@ function UsersTable({
     };
 
     return (
-        <Table onSort={onSort} columns={columns} data={userCrop}>
-            <TableHeader
-                onSort={onSort}
-                columns={columns}
-                selectedSort={selectedSort}
-            />
-            <TableBody columns={columns} data={userCrop} />
-        </Table>
+        <>
+            <Table onSort={onSort} columns={columns} data={userCrop}>
+                <TableHeader
+                    onSort={onSort}
+                    columns={columns}
+                    selectedSort={selectedSort}
+                />
+                <TableBody columns={columns} data={userCrop} />
+            </Table>
+        </>
     );
 }
 UsersTable.propTypes = {

@@ -9,8 +9,10 @@ import UsersTable from "../components/userList/usersTable";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
 import UserInfo from "../components/userList/userInfo";
+import Search from "../components/tableElements/search";
 
 const Users = () => {
+    const [searchText, setSearchText] = useState("");
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
@@ -56,6 +58,7 @@ const Users = () => {
         );
     };
     const handleProfessionSelect = (item) => {
+        setSearchText("");
         selectedProf && item._id === selectedProf._id
             ? setSelectedProf(allProfession)
             : setSelectedProf(item);
@@ -81,13 +84,20 @@ const Users = () => {
             setSortBy({ iter: prop, order: "asc" });
         }
     };
+    const handleSearch = (e) => {
+        setSelectedProf(allProfession);
+        setSearchText(e.target.value);
+    };
     const filterUsers =
         selectedProf._id !== allProfession._id
             ? users.filter((user) => user.profession._id === selectedProf._id)
             : users;
-    const count = filterUsers.length;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
-    const userCrop = paginate(sortedUsers, currentPage, pageSize);
+    const searchedUsers = sortedUsers.filter((user) =>
+        user.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    const count = searchedUsers.length;
+    const userCrop = paginate(searchedUsers, currentPage, pageSize);
     useEffect(() => {
         if (!userCrop.length && currentPage !== 1) {
             setCurrentPage((prev) => prev - 1);
@@ -96,6 +106,7 @@ const Users = () => {
     useEffect(() => {
         setSelectedProf(allProfession);
     }, [profListinUsers.length]);
+
     const { id } = useParams();
     if (id) return <UserInfo id={id} />;
     return (
@@ -103,7 +114,7 @@ const Users = () => {
             {users && professoins ? (
                 <div className="mt-2">
                     <div className="d-flex justify-content-between">
-                        <PartyMsg numUsers={filterUsers.length} />
+                        <PartyMsg numUsers={count} />
                         {users.length === 0 && (
                             <button
                                 type="button"
@@ -126,6 +137,10 @@ const Users = () => {
                         {filterUsers.length !== 0 && (
                             <div>
                                 <div>
+                                    <Search
+                                        onChange={handleSearch}
+                                        value={searchText}
+                                    />
                                     <UsersTable
                                         userCrop={userCrop}
                                         onDelete={handlerDelete}
