@@ -9,7 +9,7 @@ import UsersTable from "../components/userList/usersTable";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
 import UserInfo from "../components/userList/userInfo";
-import Search from "../components/tableElements/search";
+import TextField from "../components/UI/textField";
 
 const Users = () => {
     const [searchText, setSearchText] = useState("");
@@ -86,6 +86,7 @@ const Users = () => {
     };
     const handleSearch = (e) => {
         setSelectedProf(allProfession);
+        setCurrentPage(1);
         setSearchText(e.target.value);
     };
     const filterUsers =
@@ -94,7 +95,7 @@ const Users = () => {
             : users;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
     const searchedUsers = sortedUsers.filter((user) =>
-        user.name.toLowerCase().includes(searchText.toLowerCase())
+        user.name.toLowerCase().includes(searchText.trim().toLowerCase())
     );
     const count = searchedUsers.length;
     const userCrop = paginate(searchedUsers, currentPage, pageSize);
@@ -136,8 +137,10 @@ const Users = () => {
                         )}
                         {filterUsers.length !== 0 && (
                             <div>
-                                <div>
-                                    <Search
+                                <div className="mt-2">
+                                    <TextField
+                                        type={"search"}
+                                        placeholder={"Поиск по имени"}
                                         onChange={handleSearch}
                                         value={searchText}
                                     />

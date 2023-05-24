@@ -14,7 +14,7 @@ function TextField({ label, type, name, value, onChange, error, placeholder }) {
     };
     return (
         <div className="mb-2">
-            <label htmlFor={name}>{label}</label>
+            {name && label && <label htmlFor={name}>{label}</label>}
             <div className=" input-group has-validation">
                 <input
                     type={type === "password" ? isShowPassword() : type}
@@ -29,6 +29,7 @@ function TextField({ label, type, name, value, onChange, error, placeholder }) {
                     <button
                         className="btn btn-outline-secondary"
                         onClick={tooglePassword}
+                        type="button"
                     >
                         <i
                             className={

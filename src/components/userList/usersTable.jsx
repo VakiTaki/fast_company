@@ -20,7 +20,10 @@ function UsersTable({
             path: "name",
             name: "Имя",
             component: (user) => (
-                <Link className="nav-link" to={`/users/${user._id}`}>
+                <Link
+                    className="nav-link text-nowrap text-start p-0"
+                    to={`/users/${user._id}`}
+                >
                     {user.name}
                 </Link>
             )

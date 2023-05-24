@@ -25,7 +25,7 @@ function TableHeader({ onSort, columns, selectedSort }) {
                         scope="col"
                         style={{ width: "110px" }}
                     >
-                        <div className="d-flex">
+                        <div className="d-flex  text-nowrap">
                             {columns[column].name}
                             {renderArrow(columns[column].path)}
                         </div>

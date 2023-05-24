@@ -12,7 +12,7 @@ function GroupList({ items, onItemSelect, selectedProf, profListinUsers }) {
             {itemList.map((item) => (
                 <li
                     className={
-                        "list-group-item" +
+                        "list-group-item text-nowrap" +
                         (item._id === selectedProf._id ? " active" : "")
                     }
                     key={item._id}
