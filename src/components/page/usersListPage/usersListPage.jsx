@@ -28,7 +28,7 @@ const UsersListPage = () => {
         ]);
     }, [users.length]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [professoins, setProfessions] = useState();
+    const [professions, setProfessions] = useState();
     useEffect(() => {
         api.professions.fetchAll().then((data) =>
             setProfessions({
@@ -106,7 +106,7 @@ const UsersListPage = () => {
     }, [profListinUsers.length]);
     return (
         <>
-            {users && professoins ? (
+            {users && professions ? (
                 <div className="mt-2">
                     <div className="d-flex justify-content-between">
                         <PartyMsg numUsers={count} />
@@ -124,7 +124,7 @@ const UsersListPage = () => {
                         {!!users.length && (
                             <>
                                 <GroupList
-                                    items={professoins}
+                                    items={professions}
                                     onItemSelect={handleProfessionSelect}
                                     selectedProf={selectedProf}
                                     profListinUsers={profListinUsers}
