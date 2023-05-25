@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function RadioField({ options, name, onChange, value, label }) {
+    const handleChange = (e) => {
+        onChange({ name, value: e.target.value });
+    };
     return (
         <div className="mb-2">
             <label className="form-label">{label}</label>
@@ -18,7 +21,7 @@ function RadioField({ options, name, onChange, value, label }) {
                             id={option.name + "_" + option.value}
                             value={option.value}
                             checked={option.value === value}
-                            onChange={onChange}
+                            onChange={handleChange}
                         />
                         <label
                             className="form-check-label"

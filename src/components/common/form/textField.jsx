@@ -12,6 +12,9 @@ function TextField({ label, type, name, value, onChange, error, placeholder }) {
     const isInvalidClass = () => {
         return "form-control " + (error ? "is-invalid" : "");
     };
+    const handleChange = (e) => {
+        onChange({ name, value: e.target.value });
+    };
     return (
         <div className="mb-2">
             {name && label && <label htmlFor={name}>{label}</label>}
@@ -21,7 +24,7 @@ function TextField({ label, type, name, value, onChange, error, placeholder }) {
                     id={name}
                     name={name}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleChange}
                     className={isInvalidClass()}
                     placeholder={placeholder || ""}
                 />

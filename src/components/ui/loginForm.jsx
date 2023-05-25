@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
+import CheckBoxField from "../common/form/checkBoxField";
 
 function LoginForm() {
-    const [data, setData] = useState({ email: "", password: "" });
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+        stayOn: false
+    });
     const [errors, setErrors] = useState({});
     useEffect(() => {
         validate();
     }, [data]);
-    const handleChange = ({ target }) => {
+    const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {
@@ -66,7 +71,12 @@ function LoginForm() {
                 onChange={handleChange}
                 error={errors.password}
             />
-
+            <CheckBoxField
+                value={data.stayOn}
+                onChange={handleChange}
+                name="stayOn"
+                label="Оставать в системе"
+            />
             <button
                 className="btn btn-primary mx-auto w-100"
                 disabled={!isValid}

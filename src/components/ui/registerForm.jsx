@@ -4,23 +4,29 @@ import { validator } from "../../utils/validator";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
+import MultiSelectField from "../common/form/multiSelectField";
+import CheckBoxField from "../common/form/checkBoxField";
 
 function RegisterForm() {
     const [professions, setProfessions] = useState({});
+    const [qualities, setQualities] = useState({});
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
+        api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
     const [data, setData] = useState({
         email: "",
         password: "",
         profession: "",
-        sex: "secret"
+        sex: "secret",
+        qualities: [],
+        licence: false
     });
     const [errors, setErrors] = useState({});
     useEffect(() => {
         validate();
     }, [data]);
-    const handleChange = ({ target }) => {
+    const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {
@@ -48,6 +54,11 @@ function RegisterForm() {
             }
         },
         profession: {
+            isRequired: {
+                message: "Поле обязательно для заполнения"
+            }
+        },
+        licence: {
             isRequired: {
                 message: "Поле обязательно для заполнения"
             }
@@ -91,6 +102,7 @@ function RegisterForm() {
                 error={errors.profession}
                 optionsName={"name"}
                 optionsValue={"_id"}
+                name="profession"
             />
             <RadioField
                 label={"Выбери свой пол"}
@@ -102,6 +114,24 @@ function RegisterForm() {
                 value={data.sex}
                 name="sex"
                 onChange={handleChange}
+            />
+            <MultiSelectField
+                isMulti
+                name="qualities"
+                label="Твои качества"
+                options={qualities}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={handleChange}
+                optionsName="name"
+                optionsValue="_id"
+            />
+            <CheckBoxField
+                error={errors.licence}
+                value={data.licence}
+                onChange={handleChange}
+                name="licence"
+                label="Согласен с лицензионным соглашением"
             />
             <button
                 className="btn btn-primary mx-auto w-100"
