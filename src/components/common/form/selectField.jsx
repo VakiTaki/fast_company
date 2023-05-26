@@ -16,26 +16,20 @@ const SelectField = ({
         return "form-select " + (error ? "is-invalid" : "");
     };
     const optionsArray =
-        typeof options === "object"
-            ? Object.keys(options).map((optionName) => ({
-                  name: options[optionName][optionsName],
-                  value: options[optionName][optionsValue]
-              }))
-            : options.map((option) => ({
-                  name: option[optionsName],
-                  value: option[optionsValue]
-              }));
+        !Array.isArray(options) && typeof options === "object"
+            ? Object.values(options)
+            : options;
     const handleChange = (e) => {
         onChange({ name, value: e.target.value });
     };
     return (
         <div className="mb-2">
-            <label htmlFor="validationCustom04" className="form-label">
+            <label htmlFor={name} className="form-label">
                 {label}
             </label>
             <select
                 className={isInvalidClass()}
-                id="validationCustom04"
+                id={name}
                 name={name}
                 value={value}
                 onChange={handleChange}
@@ -43,10 +37,10 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray &&
+                {optionsArray.length > 0 &&
                     optionsArray.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.name}
+                        <option value={option.value} key={option.value}>
+                            {option.label}
                         </option>
                     ))}
             </select>

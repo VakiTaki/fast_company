@@ -39,6 +39,7 @@ const UsersListPage = () => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
     function handlerDelete(id) {
+        api.users.deleteUser(id);
         setUsers((prev) => prev.filter((user) => user._id !== id));
     }
     const handlePageChange = (pageIndex) => {
@@ -48,6 +49,7 @@ const UsersListPage = () => {
         setUsers((prev) =>
             prev.map((user) => {
                 if (user._id === id) {
+                    api.users.update(id, { ...user, bookmark: !user.bookmark });
                     return { ...user, bookmark: !user.bookmark };
                 }
                 return user;
@@ -81,10 +83,10 @@ const UsersListPage = () => {
             setSortBy({ iter: prop, order: "asc" });
         }
     };
-    const handleSearch = (e) => {
+    const handleSearch = (target) => {
         setSelectedProf(allProfession);
         setCurrentPage(1);
-        setSearchText(e.target.value);
+        setSearchText(target.value);
     };
     const filterUsers = searchText.trim()
         ? users.filter((user) =>

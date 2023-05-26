@@ -1,39 +1,49 @@
 import React, { useState, useEffect } from "react";
 import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
-import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
+import PropTypes from "prop-types";
+import api from "../../api";
+import { useHistory } from "react-router-dom";
 
-function RegisterForm() {
-    const [professions, setProfessions] = useState({});
-    const [qualities, setQualities] = useState([]);
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            const professionsList = Object.keys(data).map((professionName) => ({
-                label: data[professionName].name,
-                value: data[professionName]._id
-            }));
-            setProfessions(professionsList);
-        });
-        api.qualities.fetchAll().then((data) => {
-            const qualitiesList = Object.keys(data).map((optionName) => ({
-                label: data[optionName].name,
-                value: data[optionName]._id,
-                color: data[optionName].color
-            }));
-            setQualities(qualitiesList);
-        });
-    }, []);
+function EditUserForm({ user, qualities, professions }) {
+    const history = useHistory();
+    const getProfessionById = (id) => {
+        for (const prof of professions) {
+            if (prof.value === id) {
+                return { _id: prof.value, name: prof.label };
+            }
+        }
+    };
+    const getQualities = (elements) => {
+        const qualitiesArray = [];
+        for (const elem of elements) {
+            for (const quality in qualities) {
+                if (elem.value === qualities[quality].value) {
+                    qualitiesArray.push({
+                        _id: qualities[quality].value,
+                        name: qualities[quality].label,
+                        color: qualities[quality].color
+                    });
+                }
+            }
+        }
+        return qualitiesArray;
+    };
     const [data, setData] = useState({
-        email: "",
-        password: "",
-        profession: "",
-        sex: "secret",
-        qualities: [],
-        licence: false
+        email: user.email,
+        name: user.name,
+        profession: user.profession._id,
+        sex: user.sex,
+        qualities: user.qualities.map((quality) => ({
+            label: quality.name,
+            value: quality._id,
+            color: quality.color
+        })),
+        isValidData: false
     });
     const [errors, setErrors] = useState({});
     useEffect(() => {
@@ -43,6 +53,11 @@ function RegisterForm() {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {
+        name: {
+            isRequired: {
+                message: "Поле обязательно дял заполнения"
+            }
+        },
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -71,7 +86,7 @@ function RegisterForm() {
                 message: "Поле обязательно для заполнения"
             }
         },
-        licence: {
+        isValidData: {
             isRequired: {
                 message: "Поле обязательно для заполнения"
             }
@@ -83,41 +98,28 @@ function RegisterForm() {
         return !Object.keys(errors).length;
     };
     const isValid = !Object.keys(errors).length;
-    const getProfessionById = (id) => {
-        for (const prof of professions) {
-            if (prof.value === id) {
-                return { _id: prof.value, name: prof.label };
-            }
-        }
-    };
-    const getQualities = (elements) => {
-        const qualitiesArray = [];
-        for (const elem of elements) {
-            for (const quality in qualities) {
-                if (elem.value === qualities[quality].value) {
-                    qualitiesArray.push({
-                        _id: qualities[quality].value,
-                        name: qualities[quality].label,
-                        color: qualities[quality].color
-                    });
-                }
-            }
-        }
-        return qualitiesArray;
-    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
         const { profession, qualities } = data;
-        console.log({
+        api.users.update(user._id, {
             ...data,
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         });
+        history.replace(`/users/${user._id}`);
     };
     return (
         <form onSubmit={handleSubmit}>
+            <TextField
+                label={"Имя"}
+                name={"name"}
+                value={data.name}
+                onChange={handleChange}
+                error={errors.name}
+            />
             <TextField
                 label={"Почта"}
                 name={"email"}
@@ -125,14 +127,7 @@ function RegisterForm() {
                 onChange={handleChange}
                 error={errors.email}
             />
-            <TextField
-                label={"Пароль"}
-                type={"password"}
-                name={"password"}
-                value={data.password}
-                onChange={handleChange}
-                error={errors.password}
-            />
+
             <SelectField
                 label={"Выбери профессию"}
                 options={professions}
@@ -156,6 +151,7 @@ function RegisterForm() {
                 onChange={handleChange}
             />
             <MultiSelectField
+                defaultValue={data.qualities}
                 isMulti
                 name="qualities"
                 label="Твои качества"
@@ -167,13 +163,13 @@ function RegisterForm() {
                 optionsValue="_id"
             />
             <CheckBoxField
-                error={errors.licence}
-                value={data.licence}
+                error={errors.isValidData}
+                value={data.isValidData}
                 onChange={handleChange}
-                name="licence"
+                name="isValidData"
                 // label="Согласен с лицензионным соглашением"
             >
-                Согласен с лицензионным соглашением
+                Введены точные данные
             </CheckBoxField>
             <button
                 className="btn btn-primary mx-auto w-100"
@@ -184,5 +180,10 @@ function RegisterForm() {
         </form>
     );
 }
+EditUserForm.propTypes = {
+    user: PropTypes.object,
+    qualities: PropTypes.array,
+    professions: PropTypes.array
+};
 
-export default RegisterForm;
+export default EditUserForm;
