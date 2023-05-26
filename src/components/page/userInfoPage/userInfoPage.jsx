@@ -11,15 +11,18 @@ function userInfoPage({ id }) {
     const handleToUserEditPage = () => {
         history.replace(`/users/${id}/edit`);
     };
+    const handleToUsers = () => {
+        history.replace(`/users`);
+    };
     const [user, setUser] = useState();
-    const [noUser, setNoUser] = useState(false);
+    const [hasUser, sethasUser] = useState(false);
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
         setTimeout(() => {
             if (!userRef.current) {
-                setNoUser((prev) => !prev);
+                sethasUser((prev) => !prev);
                 setTimeout(() => {
-                    history.replace(`/users/`);
+                    handleToUsers();
                 }, 2000);
             }
         }, 5000);
@@ -46,8 +49,14 @@ function userInfoPage({ id }) {
                     >
                         Редактировать
                     </button>
+                    <button
+                        onClick={handleToUsers}
+                        className="btn btn-primary mt-2 ms-2"
+                    >
+                        К списку пользователей
+                    </button>
                 </>
-            ) : noUser ? (
+            ) : hasUser ? (
                 <h3 className="text-center text-danger">
                     Пользователь не найден!
                 </h3>

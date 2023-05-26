@@ -17,31 +17,31 @@ function Login() {
                 <div className="col-md-6 offset-md-3 shadow p-4">
                     {formType === "register" ? (
                         <>
-                            <h3 className="mb-4">Registration</h3>
+                            <h3 className="mb-4">Регистрация</h3>
                             <RegisterForm />
                             <p className="mt-2">
-                                Already have account?{" "}
+                                Есть аккаунт?{" "}
                                 <a
                                     className="text-primary"
                                     role="button"
                                     onClick={toogleFormType}
                                 >
-                                    Sign In
+                                    Войти
                                 </a>
                             </p>
                         </>
                     ) : (
                         <>
-                            <h3 className="mb-4">Login</h3>
+                            <h3 className="mb-4">Вход</h3>
                             <LoginForm />
                             <p className="mt-2">
-                                Dont have account?{" "}
+                                Нет аккаунта?{" "}
                                 <a
                                     className="text-primary"
                                     role="button"
                                     onClick={toogleFormType}
                                 >
-                                    Sign Up
+                                    Зарегестрироваться
                                 </a>
                             </p>
                         </>
