@@ -6,8 +6,9 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
+import PropTypes from "prop-types";
 
-function RegisterForm() {
+function RegisterForm({ onToogleFormType }) {
     const [professions, setProfessions] = useState({});
     const [qualities, setQualities] = useState([]);
     useEffect(() => {
@@ -28,6 +29,7 @@ function RegisterForm() {
         });
     }, []);
     const [data, setData] = useState({
+        name: "",
         email: "",
         password: "",
         profession: "",
@@ -43,6 +45,11 @@ function RegisterForm() {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {
+        name: {
+            isRequired: {
+                message: "Имя обязательно для заполнения"
+            }
+        },
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -110,11 +117,17 @@ function RegisterForm() {
         const isValid = validate();
         if (!isValid) return;
         const { profession, qualities } = data;
-        console.log({
+        api.users.addUser({
             ...data,
+            completedMeetings: 0,
+            rate: 0,
+            bookmark: false,
+            name: data.name,
+            _id: Date.now().toString(),
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         });
+        onToogleFormType();
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -124,6 +137,13 @@ function RegisterForm() {
                 value={data.email}
                 onChange={handleChange}
                 error={errors.email}
+            />
+            <TextField
+                label={"Имя"}
+                name={"name"}
+                value={data.name}
+                onChange={handleChange}
+                error={errors.name}
             />
             <TextField
                 label={"Пароль"}
@@ -185,4 +205,7 @@ function RegisterForm() {
     );
 }
 
+RegisterForm.propTypes = {
+    onToogleFormType: PropTypes.func
+};
 export default RegisterForm;

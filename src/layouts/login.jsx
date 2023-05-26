@@ -18,7 +18,7 @@ function Login() {
                     {formType === "register" ? (
                         <>
                             <h3 className="mb-4">Регистрация</h3>
-                            <RegisterForm />
+                            <RegisterForm onToogleFormType={toogleFormType} />
                             <p className="mt-2">
                                 Есть аккаунт?{" "}
                                 <a

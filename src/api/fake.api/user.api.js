@@ -192,6 +192,13 @@ const deleteUser = (id) =>
         localStorage.setItem("users", JSON.stringify(users));
         resolve(users);
     });
+const addUser = (data) =>
+    new Promise((resolve) => {
+        const users = JSON.parse(localStorage.getItem("users"));
+        users.push(data);
+        localStorage.setItem("users", JSON.stringify(users));
+        resolve(users);
+    });
 
 const getById = (id) =>
     new Promise((resolve) => {
@@ -207,5 +214,6 @@ export default {
     fetchAll,
     getById,
     update,
-    deleteUser
+    deleteUser,
+    addUser
 };

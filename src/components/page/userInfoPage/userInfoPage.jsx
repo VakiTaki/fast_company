@@ -15,12 +15,12 @@ function userInfoPage({ id }) {
         history.replace(`/users`);
     };
     const [user, setUser] = useState();
-    const [hasUser, sethasUser] = useState(false);
+    const [hasUser, setHasUser] = useState(false);
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
         setTimeout(() => {
             if (!userRef.current) {
-                sethasUser((prev) => !prev);
+                setHasUser((prev) => !prev);
                 setTimeout(() => {
                     handleToUsers();
                 }, 2000);
