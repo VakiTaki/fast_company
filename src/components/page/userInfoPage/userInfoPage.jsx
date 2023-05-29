@@ -32,39 +32,46 @@ function userInfoPage({ id }) {
     }, [user]);
     return (
         <>
-            {user ? (
-                <>
-                    <div>
-                        <h3>{user.name}</h3>
-                        <h6>Профессия: {user.profession.name}</h6>
-                        <QualityList qualities={user.qualities} />
-                        <p className="mt-3">
-                            Kоличество встреч: {user.completedMeetings}
-                        </p>
-                        <p>Рейтинг: {user.rate}/5</p>
+            <div className="conteiner mt-5 ">
+                <div className="row">
+                    <div className="col-md-6 offset-md-3 shadow p-4">
+                        {user ? (
+                            <>
+                                <div>
+                                    <h3>{user.name}</h3>
+                                    <h6>Профессия: {user.profession.name}</h6>
+                                    <QualityList qualities={user.qualities} />
+                                    <p className="mt-3">
+                                        Kоличество встреч:{" "}
+                                        {user.completedMeetings}
+                                    </p>
+                                    <p>Рейтинг: {user.rate}/5</p>
+                                </div>
+                                <button
+                                    onClick={handleToUserEditPage}
+                                    className="btn btn-primary mt-2"
+                                >
+                                    Редактировать
+                                </button>
+                                <button
+                                    onClick={handleToUsers}
+                                    className="btn btn-primary mt-2 ms-2"
+                                >
+                                    К списку пользователей
+                                </button>
+                            </>
+                        ) : hasUser ? (
+                            <h3 className="text-center text-danger">
+                                Пользователь не найден!
+                            </h3>
+                        ) : (
+                            <>
+                                <Loader />
+                            </>
+                        )}
                     </div>
-                    <button
-                        onClick={handleToUserEditPage}
-                        className="btn btn-primary mt-2"
-                    >
-                        Редактировать
-                    </button>
-                    <button
-                        onClick={handleToUsers}
-                        className="btn btn-primary mt-2 ms-2"
-                    >
-                        К списку пользователей
-                    </button>
-                </>
-            ) : hasUser ? (
-                <h3 className="text-center text-danger">
-                    Пользователь не найден!
-                </h3>
-            ) : (
-                <>
-                    <Loader />
-                </>
-            )}
+                </div>
+            </div>
         </>
     );
 }

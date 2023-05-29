@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../../../api";
 import EditUserForm from "../../ui/editUserForm";
 import { useParams } from "react-router-dom";
 import Loader from "../../common/loader";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function UserEditPage() {
     const { id } = useParams();
+    const history = useHistory();
+    const userRef = useRef();
+    const [hasUser, setHasUser] = useState(false);
+    const handleToUsers = () => {
+        history.replace(`/users`);
+    };
     const [user, setUser] = useState();
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState([]);
@@ -26,7 +33,18 @@ function UserEditPage() {
             setQualities(qualitiesList);
             api.users.getById(id).then((data) => setUser(data));
         });
+        setTimeout(() => {
+            if (!userRef.current) {
+                setHasUser((prev) => !prev);
+                setTimeout(() => {
+                    handleToUsers();
+                }, 2000);
+            }
+        }, 5000);
     }, []);
+    useEffect(() => {
+        userRef.current = user;
+    }, [user]);
     return (
         <div className="conteiner mt-5 ">
             <div className="row">
@@ -37,8 +55,14 @@ function UserEditPage() {
                             professions={professions}
                             qualities={qualities}
                         />
+                    ) : hasUser ? (
+                        <h3 className="text-center text-danger">
+                            Пользователь не найден!
+                        </h3>
                     ) : (
-                        <Loader />
+                        <>
+                            <Loader />
+                        </>
                     )}
                 </div>
             </div>

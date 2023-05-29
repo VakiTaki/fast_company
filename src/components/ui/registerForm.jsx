@@ -6,9 +6,10 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function RegisterForm({ onToogleFormType }) {
+function RegisterForm() {
+    const history = useHistory();
     const [professions, setProfessions] = useState({});
     const [qualities, setQualities] = useState([]);
     useEffect(() => {
@@ -127,7 +128,7 @@ function RegisterForm({ onToogleFormType }) {
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         });
-        onToogleFormType();
+        history.replace("/login");
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -205,7 +206,4 @@ function RegisterForm({ onToogleFormType }) {
     );
 }
 
-RegisterForm.propTypes = {
-    onToogleFormType: PropTypes.func
-};
 export default RegisterForm;
