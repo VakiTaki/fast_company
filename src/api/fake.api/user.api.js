@@ -169,7 +169,13 @@ const users = [
 if (!localStorage.getItem("users")) {
     localStorage.setItem("users", JSON.stringify(users));
 }
-
+const resetAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            localStorage.setItem("users", JSON.stringify(users));
+            resolve(users);
+        }, 1000);
+    });
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
@@ -215,5 +221,6 @@ export default {
     getById,
     update,
     deleteUser,
-    addUser
+    addUser,
+    resetAll
 };

@@ -31,6 +31,11 @@ export function validator(data, config) {
                 statusValidate = data.length < config.value;
                 break;
             }
+            case "isName": {
+                const containDigitRegExp = /^([^' -][a-zA-ZА-ЯЁа-яё'-]{1,20}([ ])){1,2}[a-zA-ZА-ЯЁа-яё'-]{1,20}[^ ]$/ug;
+                statusValidate = !containDigitRegExp.test(data);
+                break;
+            }
             default:
                 break;
         }

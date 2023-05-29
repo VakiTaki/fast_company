@@ -56,6 +56,9 @@ function EditUserForm({ user, qualities, professions }) {
         name: {
             isRequired: {
                 message: "Поле обязательно дял заполнения"
+            },
+            isName: {
+                message: "Имя должно быть формата 'Имя Фамилия (Отчество)'"
             }
         },
         email: {

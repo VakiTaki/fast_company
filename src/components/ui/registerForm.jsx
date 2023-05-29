@@ -49,6 +49,9 @@ function RegisterForm() {
         name: {
             isRequired: {
                 message: "Имя обязательно для заполнения"
+            },
+            isName: {
+                message: "Имя должно быть формата 'Имя Фамилия (Отчество)'"
             }
         },
         email: {
