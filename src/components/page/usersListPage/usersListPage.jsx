@@ -64,6 +64,7 @@ const UsersListPage = () => {
         setCurrentPage(1);
     };
     const handleResetUsers = () => {
+        setProfessions();
         api.users.resetAll().then((data) => setUsers(data));
         api.professions.fetchAll().then((data) =>
             setProfessions({
