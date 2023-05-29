@@ -7,8 +7,8 @@ import Loader from "../../common/loader";
 function UserEditPage() {
     const { id } = useParams();
     const [user, setUser] = useState();
-    const [professions, setProfessions] = useState({});
-    const [qualities, setQualities] = useState({});
+    const [professions, setProfessions] = useState([]);
+    const [qualities, setQualities] = useState([]);
     useEffect(() => {
         api.professions.fetchAll().then((data) => {
             const professionsList = Object.keys(data).map((professionName) => ({
