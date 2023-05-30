@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
     const navigation = [
         { id: 0, path: "/", title: "Главная" },
-        { id: 1, path: "/login", title: "Вход/Регистрация" },
+        { id: 1, path: "/login", title: "Вход" },
         { id: 2, path: "/users", title: "Пользователи" }
     ];
     return (
