@@ -121,17 +121,18 @@ function RegisterForm() {
         const isValid = validate();
         if (!isValid) return;
         const { profession, qualities } = data;
-        api.users.addUser({
-            ...data,
-            completedMeetings: 0,
-            rate: 0,
-            bookmark: false,
-            name: data.name,
-            _id: Date.now().toString(),
-            profession: getProfessionById(profession),
-            qualities: getQualities(qualities)
-        });
-        history.replace("/login");
+        api.users
+            .addUser({
+                ...data,
+                completedMeetings: 0,
+                rate: 0,
+                bookmark: false,
+                name: data.name,
+                _id: Date.now().toString(),
+                profession: getProfessionById(profession),
+                qualities: getQualities(qualities)
+            })
+            .then((data) => history.replace("/login"));
     };
     return (
         <form onSubmit={handleSubmit}>

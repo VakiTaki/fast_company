@@ -107,12 +107,13 @@ function EditUserForm({ user, qualities, professions }) {
         const isValid = validate();
         if (!isValid) return;
         const { profession, qualities } = data;
-        api.users.update(user._id, {
-            ...data,
-            profession: getProfessionById(profession),
-            qualities: getQualities(qualities)
-        });
-        history.replace(`/users/${user._id}`);
+        api.users
+            .update(user._id, {
+                ...data,
+                profession: getProfessionById(profession),
+                qualities: getQualities(qualities)
+            })
+            .then((data) => history.push(`/users/${data._id}`));
     };
     return (
         <form onSubmit={handleSubmit}>

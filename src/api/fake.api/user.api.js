@@ -166,9 +166,13 @@ const users = [
         bookmark: false
     }
 ];
-if (!localStorage.getItem("users")) {
-    localStorage.setItem("users", JSON.stringify(users));
+function initLocalStor() {
+    if (!localStorage.getItem("users")) {
+        localStorage.setItem("users", JSON.stringify(users));
+    }
 }
+initLocalStor();
+
 const resetAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
