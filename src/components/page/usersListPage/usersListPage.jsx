@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
@@ -10,7 +10,9 @@ import _ from "lodash";
 import TextField from "../../common/form/textField";
 
 const UsersListPage = () => {
+    const timeout = useRef();
     const [searchText, setSearchText] = useState("");
+    const [searchTextDelay, setSearchTextDelay] = useState("");
     const [users, setUsers] = useState([]);
     const allProfession = { name: "Все профессии", _id: "0" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
@@ -58,6 +60,7 @@ const UsersListPage = () => {
     };
     const handleProfessionSelect = (item) => {
         setSearchText("");
+        setSearchTextDelay("");
         selectedProf && item._id === selectedProf._id
             ? setSelectedProf(allProfession)
             : setSelectedProf(item);
@@ -84,13 +87,27 @@ const UsersListPage = () => {
         }
     };
     const handleSearch = (target) => {
-        setSelectedProf(allProfession);
-        setCurrentPage(1);
         setSearchText(target.value);
     };
-    const filterUsers = searchText.trim()
+    useEffect(() => {
+        clearTimeout(timeout.current);
+        if (searchText.trim()) {
+            timeout.current = setTimeout(() => {
+                setSelectedProf(allProfession);
+                setCurrentPage(1);
+                setSearchTextDelay(searchText);
+            }, 500);
+        } else {
+            timeout.current = setTimeout(() => {
+                setSearchTextDelay(searchText);
+            }, 500);
+        }
+    }, [searchText]);
+    const filterUsers = searchTextDelay.trim()
         ? users.filter((user) =>
-              user.name.toLowerCase().includes(searchText.trim().toLowerCase())
+              user.name
+                  .toLowerCase()
+                  .includes(searchTextDelay.trim().toLowerCase())
           )
         : selectedProf._id !== allProfession._id
         ? users.filter((user) => user.profession._id === selectedProf._id)
