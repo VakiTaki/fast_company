@@ -5,12 +5,13 @@ import { validator } from "../../../utils/validator";
 import api from "../../../api";
 import { PropTypes } from "prop-types";
 
+const initialData = {
+    userId: "",
+    content: ""
+};
+
 function NewCommentForm({ id, onAddComment, usersList }) {
-    const [data, setData] = useState({
-        userId: "",
-        content: "",
-        pageId: id
-    });
+    const [data, setData] = useState(initialData);
     const [errors, setErrors] = useState({});
     const validatorConfig = {
         content: {
@@ -36,12 +37,8 @@ function NewCommentForm({ id, onAddComment, usersList }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.comments.add(data).then((data) => {
-            setData({
-                userId: "",
-                content: "",
-                pageId: id
-            });
+        api.comments.add({ ...data, pageId: id }).then((data) => {
+            setData(initialData);
             onAddComment();
             setIsDirty(false);
         });
