@@ -37,7 +37,7 @@ function NewCommentForm({ id, onAddComment, usersList }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.comments.add({ ...data, pageId: id }).then((data) => {
+        api.comments.add({ ...data, pageId: id }).then(() => {
             setData(initialData);
             onAddComment();
             setIsDirty(false);
