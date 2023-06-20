@@ -40,6 +40,9 @@ function Comments() {
     useEffect(() => {
         userRef.current = user;
     }, [user]);
+    const sortedComentList = commentsList.sort(
+        (a, b) => parseFloat(b.created_at) - parseFloat(a.created_at)
+    );
     return (
         <>
             <div className="card mb-2">
@@ -56,7 +59,7 @@ function Comments() {
                 <div className="card mb-3">
                     <div className="card-body">
                         <CommentsList
-                            commentsList={commentsList}
+                            commentsList={sortedComentList}
                             onDelete={handleDeleteComment}
                             usersList={usersList}
                         />

@@ -10,20 +10,14 @@ function CommentsList({ commentsList, onDelete, usersList }) {
             <div className="bg-light card-body mb-3">
                 <div className="row">
                     <div className="col">
-                        {commentsList
-                            .sort(
-                                (a, b) =>
-                                    parseFloat(b.created_at) -
-                                    parseFloat(a.created_at)
-                            )
-                            .map((comment) => (
-                                <Comment
-                                    key={comment._id}
-                                    comment={comment}
-                                    onDelete={onDelete}
-                                    usersList={usersList}
-                                />
-                            ))}
+                        {commentsList.map((comment) => (
+                            <Comment
+                                key={comment._id}
+                                comment={comment}
+                                onDelete={onDelete}
+                                usersList={usersList}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

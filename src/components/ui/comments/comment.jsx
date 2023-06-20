@@ -3,6 +3,7 @@ import PropTypes, { array, func } from "prop-types";
 import { dataFormat } from "../../../utils/dataFormat";
 
 function Comment({ comment, usersList, onDelete }) {
+    const msgAuthor = usersList.find((user) => user.value === comment.userId);
     return (
         <div className="d-flex flex-start">
             <img
@@ -20,11 +21,9 @@ function Comment({ comment, usersList, onDelete }) {
                 <div className="mb-4">
                     <div className="d-flex justify-content-between align-items-center">
                         <p className="mb-1">
-                            {
-                                usersList.find(
-                                    (user) => user.value === comment.userId
-                                ).label
-                            }
+                            {msgAuthor
+                                ? msgAuthor.label
+                                : "Пользователь удален"}
                             <span className="small ms-2">
                                 {dataFormat(comment.created_at)}
                             </span>
