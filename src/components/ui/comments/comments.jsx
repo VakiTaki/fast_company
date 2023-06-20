@@ -51,17 +51,18 @@ function Comments() {
                     />
                 </div>
             </div>
-            <div className="card mb-3">
-                <div className="card-body">
-                    {!!commentsList.length && !!usersList.length && (
+
+            {!!commentsList.length && !!usersList.length && (
+                <div className="card mb-3">
+                    <div className="card-body">
                         <CommentsList
                             commentsList={commentsList}
                             onDelete={handleDeleteComment}
                             usersList={usersList}
                         />
-                    )}
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 }
