@@ -39,6 +39,7 @@ function NewCommentForm({ id, onAddComment, usersList }) {
         e.preventDefault();
         api.comments.add({ ...data, pageId: id }).then(() => {
             setData(initialData);
+            setErrors({});
             onAddComment();
             setIsDirty(false);
         });
@@ -74,7 +75,11 @@ function NewCommentForm({ id, onAddComment, usersList }) {
                     label={"Сообщение"}
                 ></TextAreaField>
             </div>
-            <button className="btn btn-primary" disabled={!isValid}>
+            <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={!isValid}
+            >
                 Добавить комментарий
             </button>
         </form>

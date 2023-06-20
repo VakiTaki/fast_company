@@ -15,10 +15,6 @@ export const dataFormat = (data) => {
    if (dataNow - msgDate < 10 * 60 * 1000) return "10 минут назад";
    if (dataNow - msgDate < 30 * 60 * 1000) return "30 минут назад";
    if (dataNow - msgDate < 24 * 60 * 60 * 1000) return "сегодня в " + msgDate.getHours() + ":" + (msgDate.getMinutes().toString().length > 1 ? msgDate.getMinutes() : "0" + msgDate.getMinutes());
-   if (dataNow.getFullYear() - msgDate.getFullYear() > 1) {
-      return msgDate.toLocaleDateString("ru", optionsYears);
-   }
-   if (dataNow.getFullYear() - msgDate.getFullYear() === 0) {
-      return msgDate.toLocaleDateString("ru", optionsYear);
-   }
+   if (dataNow.getFullYear() - msgDate.getFullYear() === 0) return msgDate.toLocaleDateString("ru", optionsYear);
+   return msgDate.toLocaleDateString("ru", optionsYears);
 };
