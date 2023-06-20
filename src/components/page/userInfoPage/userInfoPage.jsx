@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import api from "../../../api";
-import QualityList from "../../ui/qualities/qualityList";
 import Loader from "../../common/loader";
+import UserCard from "../../ui/userInfo/userCard";
+import QualitiesCard from "../../ui/userInfo/qualitiesCard";
+import MeetingsCard from "../../ui/userInfo/meetingsCard";
+import Comments from "../../ui/comments/comments";
 
 function userInfoPage({ id }) {
     const userRef = useRef();
     const history = useHistory();
-    const handleToUserEditPage = () => {
-        history.replace(`/users/${id}/edit`);
-    };
     const handleToUsers = () => {
         history.replace(`/users`);
     };
@@ -32,46 +32,28 @@ function userInfoPage({ id }) {
     }, [user]);
     return (
         <>
-            <div className="conteiner mt-5 ">
-                <div className="row">
-                    <div className="col-md-6 offset-md-3 shadow p-4">
-                        {user ? (
-                            <>
-                                <div>
-                                    <h3>{user.name}</h3>
-                                    <h6>Профессия: {user.profession.name}</h6>
-                                    <QualityList qualities={user.qualities} />
-                                    <p className="mt-3">
-                                        Kоличество встреч:{" "}
-                                        {user.completedMeetings}
-                                    </p>
-                                    <p>Рейтинг: {user.rate}/5</p>
-                                </div>
-                                <button
-                                    onClick={handleToUserEditPage}
-                                    className="btn btn-primary mt-2"
-                                >
-                                    Редактировать
-                                </button>
-                                <button
-                                    onClick={handleToUsers}
-                                    className="btn btn-primary mt-2 ms-2"
-                                >
-                                    К списку пользователей
-                                </button>
-                            </>
-                        ) : hasUser ? (
-                            <h3 className="text-center text-danger">
-                                Пользователь не найден!
-                            </h3>
-                        ) : (
-                            <>
-                                <Loader />
-                            </>
-                        )}
+            {user ? (
+                <div className="container">
+                    <div className="row gutters-sm">
+                        <div className="col-md-4 mb-3">
+                            <UserCard user={user} />
+                            <QualitiesCard qualities={user.qualities} />
+                            <MeetingsCard meetings={user.completedMeetings} />
+                        </div>
+                        <div className="col-md-8">
+                            <Comments />
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : hasUser ? (
+                <h3 className="text-center text-danger">
+                    Пользователь не найден!
+                </h3>
+            ) : (
+                <>
+                    <Loader />
+                </>
+            )}
         </>
     );
 }

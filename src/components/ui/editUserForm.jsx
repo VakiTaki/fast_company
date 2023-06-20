@@ -115,6 +115,9 @@ function EditUserForm({ user, qualities, professions }) {
             })
             .then((data) => history.push(`/users/${data._id}`));
     };
+    const handleToUserPage = () => {
+        history.push(`/users/${user._id}`);
+    };
     return (
         <form onSubmit={handleSubmit}>
             <TextField
@@ -180,6 +183,13 @@ function EditUserForm({ user, qualities, professions }) {
                 disabled={!isValid}
             >
                 Submit
+            </button>
+            <button
+                type="button"
+                className="btn btn-secondary mx-auto mt-2 w-100"
+                onClick={handleToUserPage}
+            >
+                Отмена
             </button>
         </form>
     );
