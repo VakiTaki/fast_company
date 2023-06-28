@@ -8,12 +8,13 @@ import Loader from "../../common/loader";
 import UsersTable from "../../ui/usersTable";
 import _ from "lodash";
 import TextField from "../../common/form/textField";
+import { useUser } from "../../../hooks/useUsers";
 
 const UsersListPage = () => {
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
-    const [users, setUsers] = useState([]);
+    const { users } = useUser();
     const allProfession = { name: "Все профессии", _id: "0" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const pageSize = 4;
@@ -38,25 +39,25 @@ const UsersListPage = () => {
                 allProfession
             })
         );
-        api.users.fetchAll().then((data) => setUsers(data));
+        // api.users.fetchAll().then((data) => setUsers(data));
     }, []);
     function handlerDelete(id) {
         api.users.deleteUser(id);
-        setUsers((prev) => prev.filter((user) => user._id !== id));
+        // setUsers((prev) => prev.filter((user) => user._id !== id));
     }
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
     const handleToogleBookmark = (id) => {
-        setUsers((prev) =>
-            prev.map((user) => {
-                if (user._id === id) {
-                    api.users.update(id, { ...user, bookmark: !user.bookmark });
-                    return { ...user, bookmark: !user.bookmark };
-                }
-                return user;
-            })
-        );
+        // setUsers((prev) =>
+        //     prev.map((user) => {
+        //         if (user._id === id) {
+        //             api.users.update(id, { ...user, bookmark: !user.bookmark });
+        //             return { ...user, bookmark: !user.bookmark };
+        //         }
+        //         return user;
+        //     })
+        // );
     };
     const handleProfessionSelect = (item) => {
         setSearchText("");
@@ -68,7 +69,7 @@ const UsersListPage = () => {
     };
     const handleResetUsers = () => {
         setProfessions();
-        api.users.resetAll().then((data) => setUsers(data));
+        // api.users.resetAll().then((data) => setUsers(data));
         api.professions.fetchAll().then((data) =>
             setProfessions({
                 allProfession,

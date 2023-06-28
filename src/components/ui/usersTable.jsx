@@ -7,6 +7,7 @@ import Qualities from "./qualities";
 import Table from "../common/table";
 import DeleteBtn from "../common/deleteBtn";
 import { Link } from "react-router-dom";
+import Profession from "./profession";
 
 function UsersTable({
     userCrop,
@@ -32,7 +33,10 @@ function UsersTable({
             name: "Качества",
             component: (user) => <Qualities qualities={user.qualities} />
         },
-        profession: { path: "profession.name", name: "Профессия" },
+        profession: {
+            name: "Профессия",
+            component: (user) => <Profession id={user.profession} />
+        },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
