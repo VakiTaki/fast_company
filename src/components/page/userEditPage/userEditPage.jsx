@@ -4,6 +4,7 @@ import EditUserForm from "../../ui/editUserForm";
 import { useParams } from "react-router-dom";
 import Loader from "../../common/loader";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useUser } from "../../../hooks/useUsers";
 
 function UserEditPage() {
     const { id } = useParams();
@@ -13,7 +14,8 @@ function UserEditPage() {
     const handleToUsers = () => {
         history.replace(`/users`);
     };
-    const [user, setUser] = useState();
+    const { getUserById } = useUser();
+    const user = getUserById(id);
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState([]);
     useEffect(() => {
@@ -31,7 +33,6 @@ function UserEditPage() {
                 color: data[optionName].color
             }));
             setQualities(qualitiesList);
-            api.users.getById(id).then((data) => setUser(data));
         });
         setTimeout(() => {
             if (!userRef.current) {

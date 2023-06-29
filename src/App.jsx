@@ -19,18 +19,18 @@ function App() {
             <main>
                 <ProfessionProvider>
                     <QualityProvider>
-                        <Switch>
-                            <Route exact path="/" component={Main} />
-                            <Route path="/login/:type?" component={Login} />
-                            <UserProvider>
+                        <UserProvider>
+                            <Switch>
+                                <Route exact path="/" component={Main} />
+                                <Route path="/login/:type?" component={Login} />
                                 <Route
                                     path="/users/:id/edit"
                                     component={UserEditPage}
                                 />
                                 <Route path="/users/:id?" component={Users} />
-                            </UserProvider>
-                            <Redirect to="/" />
-                        </Switch>
+                                <Redirect to="/" />
+                            </Switch>
+                        </UserProvider>
                     </QualityProvider>
                 </ProfessionProvider>
             </main>

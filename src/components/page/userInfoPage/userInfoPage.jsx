@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import api from "../../../api";
 import Loader from "../../common/loader";
 import UserCard from "../../ui/userInfo/userCard";
 import QualitiesCard from "../../ui/userInfo/qualitiesCard";
 import MeetingsCard from "../../ui/userInfo/meetingsCard";
 import Comments from "../../ui/comments/comments";
+import { useUser } from "../../../hooks/useUsers";
 
 function userInfoPage({ id }) {
     const userRef = useRef();
@@ -14,10 +14,10 @@ function userInfoPage({ id }) {
     const handleToUsers = () => {
         history.replace(`/users`);
     };
-    const [user, setUser] = useState();
+    const { getUserById } = useUser();
+    const user = getUserById(id);
     const [hasUser, setHasUser] = useState(false);
     useEffect(() => {
-        api.users.getById(id).then((data) => setUser(data));
         setTimeout(() => {
             if (!userRef.current) {
                 setHasUser((prev) => !prev);

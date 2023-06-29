@@ -36,7 +36,7 @@ function EditUserForm({ user, qualities, professions }) {
     const [data, setData] = useState({
         email: user.email,
         name: user.name,
-        profession: user.profession._id,
+        profession: user.profession,
         sex: user.sex,
         qualities: user.qualities.map((quality) => ({
             label: quality.name,
@@ -134,7 +134,6 @@ function EditUserForm({ user, qualities, professions }) {
                 onChange={handleChange}
                 error={errors.email}
             />
-
             <SelectField
                 label={"Выбери профессию"}
                 options={professions}
