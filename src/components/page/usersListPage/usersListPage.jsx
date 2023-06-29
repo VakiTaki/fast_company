@@ -9,13 +9,14 @@ import UsersTable from "../../ui/usersTable";
 import _ from "lodash";
 import TextField from "../../common/form/textField";
 import { useUser } from "../../../hooks/useUsers";
+import { useProfession } from "../../../hooks/useProfession";
 
 const UsersListPage = () => {
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
     const { users } = useUser();
-    const allProfession = { name: "Все профессии", _id: "0" };
+    const allProfession = { _id: "0", name: "Все профессии" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const pageSize = 4;
     const [selectedProf, setSelectedProf] = useState({
@@ -27,39 +28,26 @@ const UsersListPage = () => {
     useEffect(() => {
         setProfListinUser([
             "0",
-            ...new Set(users.map((user) => user.profession._id))
+            ...new Set(users.map((user) => user.profession))
         ]);
     }, [users.length]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions, setProfessions] = useState();
+    const { profession } = useProfession();
+    const [professionsList, setProfessionsList] = useState(profession || []);
     useEffect(() => {
-        api.professions.fetchAll().then((data) =>
-            setProfessions({
-                ...data,
-                allProfession
-            })
-        );
-        // api.users.fetchAll().then((data) => setUsers(data));
+        setProfessionsList([...profession, allProfession]);
     }, []);
+
     function handlerDelete(id) {
-        api.users.deleteUser(id);
-        // setUsers((prev) => prev.filter((user) => user._id !== id));
+        console.log(id);
     }
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
     const handleToogleBookmark = (id) => {
-        // setUsers((prev) =>
-        //     prev.map((user) => {
-        //         if (user._id === id) {
-        //             api.users.update(id, { ...user, bookmark: !user.bookmark });
-        //             return { ...user, bookmark: !user.bookmark };
-        //         }
-        //         return user;
-        //     })
-        // );
+        console.log(id);
     };
-    const handleProfessionSelect = (item) => {
+    const handleProfessionSListelect = (item) => {
         setSearchText("");
         setSearchTextDelay("");
         selectedProf && item._id === selectedProf._id
@@ -68,10 +56,9 @@ const UsersListPage = () => {
         setCurrentPage(1);
     };
     const handleResetUsers = () => {
-        setProfessions();
-        // api.users.resetAll().then((data) => setUsers(data));
-        api.professions.fetchAll().then((data) =>
-            setProfessions({
+        setProfessionsList();
+        api.professionsList.fetchAll().then((data) =>
+            setProfessionsList({
                 allProfession,
                 ...data
             })
@@ -111,7 +98,7 @@ const UsersListPage = () => {
                   .includes(searchTextDelay.trim().toLowerCase())
           )
         : selectedProf._id !== allProfession._id
-        ? users.filter((user) => user.profession._id === selectedProf._id)
+        ? users.filter((user) => user.profession === selectedProf._id)
         : users;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
     const count = sortedUsers.length;
@@ -126,7 +113,7 @@ const UsersListPage = () => {
     }, [profListinUsers.length]);
     return (
         <>
-            {users && professions ? (
+            {users && professionsList ? (
                 <div className="mt-2">
                     <div className="d-flex justify-content-between">
                         <PartyMsg numUsers={count} />
@@ -144,8 +131,8 @@ const UsersListPage = () => {
                         {!!users.length && (
                             <>
                                 <GroupList
-                                    items={professions}
-                                    onItemSelect={handleProfessionSelect}
+                                    items={professionsList}
+                                    onItemSelect={handleProfessionSListelect}
                                     selectedProf={selectedProf}
                                     profListinUsers={profListinUsers}
                                 />

@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 function QualityList({ qualities }) {
     return (
         <>
-            {qualities.map((quality) => (
-                <Quality quality={quality} key={quality._id} />
+            {qualities.map((qualityId) => (
+                <Quality id={qualityId} key={qualityId} />
             ))}
         </>
     );
