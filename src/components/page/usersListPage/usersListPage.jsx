@@ -31,9 +31,10 @@ const UsersListPage = () => {
             ...new Set(users.map((user) => user.profession))
         ]);
     }, [users.length]);
+    console.log(profListinUsers);
     const [currentPage, setCurrentPage] = useState(1);
     const { profession } = useProfession();
-    const [professionsList, setProfessionsList] = useState(profession || []);
+    const [professionsList, setProfessionsList] = useState(profession);
     useEffect(() => {
         setProfessionsList([...profession, allProfession]);
     }, []);
