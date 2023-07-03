@@ -1,13 +1,31 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import config from "../config.json";
+import configFile from "../config.json";
 
 // axios.defaults.baseURL(config.endPoint)
-const apiURL = axios.create({ baseURL: config.apiEndpoint });
-
+const apiURL = axios.create({ baseURL: configFile.apiEndpoint });
+function transformData(data) {
+   return data ? Object.values(data) : [];
+}
+apiURL.interceptors.request.use(
+   function (config) {
+      if (configFile.isFireBase) {
+         const containSlash = /\/$/gi.test(config.url);
+         config.url = (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
+         return config;
+      };
+   }, function (error) {
+      return Promise.reject(error);
+   }
+);
 apiURL.interceptors.response.use(
-   (response) => response,
+   (response) => {
+      if (configFile.isFireBase) {
+         response.data = { content: (transformData(response.data)) };
+      }
+      return response;
+   },
    function (error) {
       const expectedErrors =
          error.response &&
