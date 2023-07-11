@@ -4,12 +4,14 @@ import { validator } from "../../utils/validator";
 import SelectField from "../common/form/selectField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useProfession } from "../../hooks/useProfession";
 import { useQuality } from "../../hooks/useQuality";
+import { useAuth } from "../../hooks/useAuth";
 
 function RegisterForm() {
-    // const history = useHistory();
+    const history = useHistory();
+    const { signUp } = useAuth();
     const { profession } = useProfession();
     const { quality } = useQuality();
     const [data, setData] = useState({
@@ -86,16 +88,20 @@ function RegisterForm() {
             return { label: qual.name, value: qual._id };
         });
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log({
+        const newData = {
             ...data,
-            quality: data.quality.map((q) => {
-                return q.value;
-            })
-        });
+            quality: data.quality.map((q) => q.value)
+        };
+        try {
+            await signUp(newData);
+            history.push("/");
+        } catch (error) {
+            setErrors(error);
+        }
     };
     return (
         <form onSubmit={handleSubmit}>

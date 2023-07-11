@@ -34,6 +34,7 @@ const UserProvider = ({ children }) => {
     function getUserById(id) {
         return users.find((u) => u._id === id);
     }
+
     function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
