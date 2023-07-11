@@ -24,13 +24,17 @@ const UsersListPage = () => {
         _id: "0"
     });
     // уникальный список айди профессий в users
-    const [profListinUsers, setProfListinUser] = useState(["0"]);
+    const [profListinUsers, setProfListinUser] = useState([
+        "0",
+        ...new Set(users.map((user) => user.profession))
+    ]);
     useEffect(() => {
         setProfListinUser([
             "0",
             ...new Set(users.map((user) => user.profession))
         ]);
     }, [users.length]);
+    console.log(profListinUsers);
     const [currentPage, setCurrentPage] = useState(1);
     const { profession } = useProfession();
     const [professionsList, setProfessionsList] = useState(profession);

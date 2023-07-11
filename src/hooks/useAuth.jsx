@@ -3,15 +3,17 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { setTokens } from "../service/localStorage.service";
-import UserProvider, { useUser } from "./useUsers";
+import userService from "../service/user.service";
+import { useUser } from "./useUsers";
 
 const AuthContext = React.createContext();
 
 export const useAuth = () => {
     return useContext(AuthContext);
 };
+
 const AuthProvider = ({ children }) => {
-    const { createUser } = useUser();
+    const { getUsers } = useUser();
     const [error, setError] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
     async function signUp({ email, password, ...rest }) {
@@ -67,14 +69,15 @@ const AuthProvider = ({ children }) => {
             }
         }
     }
-    //  async function createUser(data) {
-    //      try {
-    //          const { content } = await userService.create(data);
-    //          return content;
-    //      } catch (error) {
-    //          errorCatcher(error);
-    //      }
-    //  }
+    async function createUser(data) {
+        try {
+            const { content } = await userService.create(data);
+            getUsers();
+            return content;
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
     function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
@@ -86,11 +89,9 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
     return (
-        <UserProvider>
-            <AuthContext.Provider value={{ signUp, signIn, currentUser }}>
-                {children}
-            </AuthContext.Provider>
-        </UserProvider>
+        <AuthContext.Provider value={{ signUp, signIn, currentUser }}>
+            {children}
+        </AuthContext.Provider>
     );
 };
 

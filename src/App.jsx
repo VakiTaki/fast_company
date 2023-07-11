@@ -13,15 +13,15 @@ import AuthProvider from "./hooks/useAuth";
 
 function App() {
     return (
-        <AuthProvider>
-            <div className="container">
-                <header>
-                    <NavBar />
-                </header>
-                <main>
-                    <ProfessionProvider>
-                        <QualityProvider>
-                            <UserProvider>
+        <UserProvider>
+            <AuthProvider>
+                <div className="container">
+                    <header>
+                        <NavBar />
+                    </header>
+                    <main>
+                        <ProfessionProvider>
+                            <QualityProvider>
                                 <Switch>
                                     <Route exact path="/" component={Main} />
                                     <Route
@@ -38,13 +38,13 @@ function App() {
                                     />
                                     <Redirect to="/" />
                                 </Switch>
-                            </UserProvider>
-                        </QualityProvider>
-                    </ProfessionProvider>
-                </main>
-                <ToastContainer />
-            </div>
-        </AuthProvider>
+                            </QualityProvider>
+                        </ProfessionProvider>
+                    </main>
+                    <ToastContainer />
+                </div>
+            </AuthProvider>
+        </UserProvider>
     );
 }
 

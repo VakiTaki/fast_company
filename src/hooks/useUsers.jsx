@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
         setError(message);
     }
     return (
-        <UserContext.Provider value={{ users, getUserById }}>
+        <UserContext.Provider value={{ users, getUserById, getUsers }}>
             {!isLoading ? children : <h1>Loading...</h1>}
         </UserContext.Provider>
     );
