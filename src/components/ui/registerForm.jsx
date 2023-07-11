@@ -19,7 +19,7 @@ function RegisterForm() {
         email: "",
         password: "",
         profession: "",
-        quality: [],
+        qualities: [],
         licence: false
     });
     const [errors, setErrors] = useState({});
@@ -94,7 +94,10 @@ function RegisterForm() {
         if (!isValid) return;
         const newData = {
             ...data,
-            quality: data.quality.map((q) => q.value)
+            qualities: data.qualities.map((q) => q.value),
+            bookmark: false,
+            completedMeetings: 0,
+            rate: 0
         };
         try {
             await signUp(newData);
@@ -140,7 +143,7 @@ function RegisterForm() {
             />
             <MultiSelectField
                 isMulti
-                name="quality"
+                name="qualities"
                 label="Твои качества"
                 options={qualitiesToOption(quality)}
                 className="basic-multi-select"
