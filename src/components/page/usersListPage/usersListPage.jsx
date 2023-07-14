@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
-import api from "../../../api";
 import PartyMsg from "../../ui/partyMsg";
 import Loader from "../../common/loader";
 import UsersTable from "../../ui/usersTable";
@@ -34,14 +33,12 @@ const UsersListPage = () => {
             ...new Set(users.map((user) => user.profession))
         ]);
     }, [users.length]);
-    console.log(profListinUsers);
     const [currentPage, setCurrentPage] = useState(1);
     const { profession } = useProfession();
     const [professionsList, setProfessionsList] = useState(profession);
     useEffect(() => {
         setProfessionsList([...profession, allProfession]);
-    }, []);
-
+    }, [profession]);
     function handlerDelete(id) {
         console.log(id);
     }
@@ -60,13 +57,13 @@ const UsersListPage = () => {
         setCurrentPage(1);
     };
     const handleResetUsers = () => {
-        setProfessionsList();
-        api.professionsList.fetchAll().then((data) =>
-            setProfessionsList({
-                allProfession,
-                ...data
-            })
-        );
+        // setProfessionsList();
+        // api.professionsList.fetchAll().then((data) =>
+        //     setProfessionsList({
+        //         allProfession,
+        //         ...data
+        //     })
+        // );
     };
     const handleSort = (prop) => {
         if (sortBy.iter === prop) {
