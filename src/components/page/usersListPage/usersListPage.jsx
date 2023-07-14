@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
-import api from "../../../api";
 import PartyMsg from "../../ui/partyMsg";
 import Loader from "../../common/loader";
 import UsersTable from "../../ui/usersTable";
@@ -24,7 +23,10 @@ const UsersListPage = () => {
         _id: "0"
     });
     // уникальный список айди профессий в users
-    const [profListinUsers, setProfListinUser] = useState(["0"]);
+    const [profListinUsers, setProfListinUser] = useState([
+        "0",
+        ...new Set(users.map((user) => user.profession))
+    ]);
     useEffect(() => {
         setProfListinUser([
             "0",
@@ -36,8 +38,7 @@ const UsersListPage = () => {
     const [professionsList, setProfessionsList] = useState(profession);
     useEffect(() => {
         setProfessionsList([...profession, allProfession]);
-    }, []);
-
+    }, [profession]);
     function handlerDelete(id) {
         console.log(id);
     }
@@ -56,13 +57,13 @@ const UsersListPage = () => {
         setCurrentPage(1);
     };
     const handleResetUsers = () => {
-        setProfessionsList();
-        api.professionsList.fetchAll().then((data) =>
-            setProfessionsList({
-                allProfession,
-                ...data
-            })
-        );
+        // setProfessionsList();
+        // api.professionsList.fetchAll().then((data) =>
+        //     setProfessionsList({
+        //         allProfession,
+        //         ...data
+        //     })
+        // );
     };
     const handleSort = (prop) => {
         if (sortBy.iter === prop) {
