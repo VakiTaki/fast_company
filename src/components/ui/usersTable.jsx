@@ -5,17 +5,10 @@ import TableBody from "../common/table/tableBody";
 import Bookmark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table";
-import DeleteBtn from "../common/deleteBtn";
 import { Link } from "react-router-dom";
 import Profession from "./profession";
 
-function UsersTable({
-    userCrop,
-    onDelete,
-    onToogleBookmark,
-    onSort,
-    selectedSort
-}) {
+function UsersTable({ userCrop, onToogleBookmark, onSort, selectedSort }) {
     const columns = {
         name: {
             path: "name",
@@ -48,9 +41,6 @@ function UsersTable({
             component: (user) => (
                 <Bookmark user={user} onToogleBookmark={onToogleBookmark} />
             )
-        },
-        delete: {
-            component: (user) => <DeleteBtn onDelete={onDelete} user={user} />
         }
     };
 
@@ -69,7 +59,6 @@ function UsersTable({
 }
 UsersTable.propTypes = {
     userCrop: PropTypes.array.isRequired,
-    onDelete: PropTypes.func.isRequired,
     onToogleBookmark: PropTypes.func.isRequired,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired

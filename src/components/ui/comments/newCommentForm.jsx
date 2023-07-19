@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SelectField from "../../common/form/selectField";
 import TextAreaField from "../../common/form/textareaField";
 import { validator } from "../../../utils/validator";
-import api from "../../../api";
 import { PropTypes } from "prop-types";
 
 const initialData = {
-    userId: "",
     content: ""
 };
 
@@ -17,11 +14,6 @@ function NewCommentForm({ id, onAddComment, usersList }) {
         content: {
             isRequired: {
                 message: "Сообщение не может быть пустым"
-            }
-        },
-        userId: {
-            isRequired: {
-                message: "Надо выбрать пользователя"
             }
         }
     };
@@ -37,12 +29,17 @@ function NewCommentForm({ id, onAddComment, usersList }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.comments.add({ ...data, pageId: id }).then(() => {
-            setData(initialData);
-            setErrors({});
-            onAddComment();
-            setIsDirty(false);
-        });
+        onAddComment(data);
+        clearForm();
+        // getComments.comments.add({ ...data, pageId: id }).then(() => {
+        //     setData(initialData);
+        //     setErrors({});
+        //     onAddComment();
+        //     setIsDirty(false);
+        // });
+    };
+    const clearForm = () => {
+        setData(initialData);
     };
     useEffect(() => {
         if (isDirty) {
@@ -53,23 +50,12 @@ function NewCommentForm({ id, onAddComment, usersList }) {
         <form onSubmit={handleSubmit} onFocus={() => setIsDirty(true)}>
             <h2>Новый комментарий</h2>
             <div className="mb-4">
-                <SelectField
-                    label={"Пользователь"}
-                    options={usersList}
-                    value={data.userId}
-                    onChange={handleChange}
-                    defaultOption={"Выбрать..."}
-                    error={errors.userId}
-                    name={"userId"}
-                />
-            </div>
-            <div className="mb-4">
                 <TextAreaField
                     className="form-control"
                     id="content"
                     name="content"
                     rows="3"
-                    value={data.content}
+                    value={data.content || ""}
                     onChange={handleChange}
                     error={errors.content}
                     label={"Сообщение"}

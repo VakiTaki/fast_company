@@ -9,8 +9,10 @@ import _ from "lodash";
 import TextField from "../../common/form/textField";
 import { useUser } from "../../../hooks/useUsers";
 import { useProfession } from "../../../hooks/useProfession";
+import { useAuth } from "../../../hooks/useAuth";
 
 const UsersListPage = () => {
+    const { currentUser } = useAuth();
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
@@ -30,7 +32,11 @@ const UsersListPage = () => {
     useEffect(() => {
         setProfListinUser([
             "0",
-            ...new Set(users.map((user) => user.profession))
+            ...new Set(
+                users
+                    .filter((user) => user._id !== currentUser._id)
+                    .map((user) => user.profession)
+            )
         ]);
     }, [users.length]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -103,7 +109,11 @@ const UsersListPage = () => {
         : users;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
     const count = sortedUsers.length;
-    const userCrop = paginate(sortedUsers, currentPage, pageSize);
+    const userCrop = paginate(
+        sortedUsers.filter((user) => user._id !== currentUser._id),
+        currentPage,
+        pageSize
+    );
     useEffect(() => {
         if (!userCrop.length && currentPage !== 1) {
             setCurrentPage((prev) => prev - 1);

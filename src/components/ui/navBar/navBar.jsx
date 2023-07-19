@@ -5,7 +5,6 @@ import NavProfile from "../navProfile";
 
 const NavBar = () => {
     const { currentUser } = useAuth();
-    console.log(currentUser);
     const navigation = [
         { id: 0, path: "/", title: "Главная", display: true },
         { id: 1, path: "/login", title: "Вход", display: false },

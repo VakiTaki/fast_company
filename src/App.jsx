@@ -33,6 +33,7 @@ function App() {
                                         component={UserEditPage}
                                     />
                                     <ProtectedRoute
+                                        exact
                                         path="/users/:id?"
                                         component={Users}
                                     />

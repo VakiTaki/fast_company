@@ -3,8 +3,10 @@ import api from "../../../api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import NewCommentForm from "./newCommentForm";
 import CommentsList from "./commentsList";
+import { useComments } from "../../../hooks/useComments";
 
 function Comments() {
+    const { createComment } = useComments();
     const { id } = useParams();
     const userRef = useRef();
     const [commentsList, setCommenstList] = useState([]);
@@ -19,10 +21,11 @@ function Comments() {
                 )
             );
     };
-    const handleAddComment = () => {
-        api.comments
-            .fetchCommentsForUser(id)
-            .then((data) => setCommenstList(data));
+    const handleAddComment = (data) => {
+        createComment(data);
+        // api.comments
+        //     .fetchCommentsForUser(id)
+        //     .then((data) => setCommenstList(data));
     };
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));

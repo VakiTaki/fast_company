@@ -7,6 +7,7 @@ import QualitiesCard from "../../ui/userInfo/qualitiesCard";
 import MeetingsCard from "../../ui/userInfo/meetingsCard";
 import Comments from "../../ui/comments/comments";
 import { useUser } from "../../../hooks/useUsers";
+import CommentsProvider from "../../../hooks/useComments";
 
 function userInfoPage({ id }) {
     const userRef = useRef();
@@ -41,7 +42,9 @@ function userInfoPage({ id }) {
                             <MeetingsCard meetings={user.completedMeetings} />
                         </div>
                         <div className="col-md-8">
-                            <Comments />
+                            <CommentsProvider>
+                                <Comments />
+                            </CommentsProvider>
                         </div>
                     </div>
                 </div>
