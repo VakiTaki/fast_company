@@ -29,6 +29,8 @@ const UserProvider = ({ children }) => {
             return content;
         } catch (error) {
             errorCatcher(error);
+        } finally {
+            setIsLoading(false);
         }
     }
     function getUserById(id) {

@@ -2,29 +2,38 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { setTokens } from "../service/localStorage.service";
+import localStorageServise, {
+    setTokens
+} from "../service/localStorage.service";
 import userService from "../service/user.service";
-import { useUser } from "./useUsers";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const AuthContext = React.createContext();
+
+export const httpAuth = axios.create({
+    baseURL: "https://identitytoolkit.googleapis.com/v1/",
+    params: {
+        key: process.env.REACT_APP_FIREBASE_KEY
+    }
+});
 
 export const useAuth = () => {
     return useContext(AuthContext);
 };
 
 const AuthProvider = ({ children }) => {
-    const { getUsers } = useUser();
+    const history = useHistory();
     const [error, setError] = useState(null);
-    const [currentUser, setCurrentUser] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState();
     async function signUp({ email, password, ...rest }) {
         try {
-            const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
-            const { data } = await axios.post(url, {
+            const { data } = await httpAuth.post("accounts:signUp", {
                 email,
                 password,
                 returnSecureToken: true
             });
-            // setTokens(data);
+            setTokens(data);
             await createUser({ _id: data.localId, email, ...rest });
             return data;
         } catch (error) {
@@ -42,12 +51,14 @@ const AuthProvider = ({ children }) => {
     }
     async function signIn({ email, password }) {
         try {
-            const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`;
-            const { data } = await axios.post(url, {
-                email,
-                password,
-                returnSecureToken: true
-            });
+            const { data } = await httpAuth.post(
+                "accounts:signInWithPassword",
+                {
+                    email,
+                    password,
+                    returnSecureToken: true
+                }
+            );
             setTokens(data);
             setCurrentUser(data);
         } catch (error) {
@@ -72,16 +83,39 @@ const AuthProvider = ({ children }) => {
     async function createUser(data) {
         try {
             const { content } = await userService.create(data);
-            getUsers();
+            setCurrentUser(content);
             return content;
         } catch (error) {
             errorCatcher(error);
         }
     }
+    const logOut = () => {
+        localStorageServise.removeAuthData();
+        setCurrentUser(null);
+        history.push("/");
+    };
     function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
     }
+    const getUserData = async () => {
+        try {
+            const { content } = await userService.getCurrentUser();
+            setCurrentUser(content);
+            return content;
+        } catch (error) {
+            errorCatcher(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        if (localStorageServise.getAccessToken()) {
+            getUserData();
+        } else {
+            setIsLoading(false);
+        }
+    }, []);
     useEffect(() => {
         if (error !== null) {
             toast.error(error);
@@ -89,8 +123,8 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
     return (
-        <AuthContext.Provider value={{ signUp, signIn, currentUser }}>
-            {children}
+        <AuthContext.Provider value={{ signUp, signIn, currentUser, logOut }}>
+            {!isLoading ? children : "Загрузка..."}
         </AuthContext.Provider>
     );
 };

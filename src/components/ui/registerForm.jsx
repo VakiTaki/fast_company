@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useProfession } from "../../hooks/useProfession";
 import { useQuality } from "../../hooks/useQuality";
 import { useAuth } from "../../hooks/useAuth";
+import { randomInt } from "../../utils";
 
 function RegisterForm() {
     const history = useHistory();
@@ -96,8 +97,8 @@ function RegisterForm() {
             ...data,
             qualities: data.qualities.map((q) => q.value),
             bookmark: false,
-            completedMeetings: 0,
-            rate: 0
+            completedMeetings: randomInt(0, 200),
+            rate: randomInt(1, 5)
         };
         try {
             await signUp(newData);

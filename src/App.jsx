@@ -10,41 +10,41 @@ import { ToastContainer } from "react-toastify";
 import ProfessionProvider from "./hooks/useProfession";
 import QualityProvider from "./hooks/useQuality";
 import AuthProvider from "./hooks/useAuth";
+import ProtectedRoute from "./components/common/protectedRoute";
+import LogOut from "./layouts/logOut";
 
 function App() {
     return (
-        <UserProvider>
-            <AuthProvider>
-                <div className="container">
-                    <header>
-                        <NavBar />
-                    </header>
-                    <main>
-                        <ProfessionProvider>
-                            <QualityProvider>
-                                <Switch>
-                                    <Route exact path="/" component={Main} />
-                                    <Route
-                                        path="/login/:type?"
-                                        component={Login}
-                                    />
-                                    <Route
+        <AuthProvider>
+            <div className="container">
+                <header>
+                    <NavBar />
+                </header>
+                <main>
+                    <ProfessionProvider>
+                        <QualityProvider>
+                            <Switch>
+                                <Route exact path="/" component={Main} />
+                                <Route path="/logout" component={LogOut} />
+                                <Route path="/login/:type?" component={Login} />
+                                <UserProvider>
+                                    <ProtectedRoute
                                         path="/users/:id/edit"
                                         component={UserEditPage}
                                     />
-                                    <Route
+                                    <ProtectedRoute
                                         path="/users/:id?"
                                         component={Users}
                                     />
-                                    <Redirect to="/" />
-                                </Switch>
-                            </QualityProvider>
-                        </ProfessionProvider>
-                    </main>
-                    <ToastContainer />
-                </div>
-            </AuthProvider>
-        </UserProvider>
+                                </UserProvider>
+                                <Redirect to="/" />
+                            </Switch>
+                        </QualityProvider>
+                    </ProfessionProvider>
+                </main>
+                <ToastContainer />
+            </div>
+        </AuthProvider>
     );
 }
 
