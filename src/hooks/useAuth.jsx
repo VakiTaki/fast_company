@@ -69,7 +69,7 @@ const AuthProvider = ({ children }) => {
                 }
             );
             setTokens(data);
-            setCurrentUser(data);
+            await getUserData();
         } catch (error) {
             errorCatcher(error);
             const { code, message } = error.response.data.error;
