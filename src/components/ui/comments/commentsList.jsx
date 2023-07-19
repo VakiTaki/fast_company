@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Comment from "./comment";
 
-function CommentsList({ commentsList, onDelete, usersList }) {
+function CommentsList({ commentsList, onDelete }) {
     return (
         <div className="card-body">
             <h2>Комментарии</h2>
@@ -15,7 +15,6 @@ function CommentsList({ commentsList, onDelete, usersList }) {
                                 key={comment._id}
                                 comment={comment}
                                 onDelete={onDelete}
-                                usersList={usersList}
                             />
                         ))}
                     </div>

@@ -7,7 +7,7 @@ const initialData = {
     content: ""
 };
 
-function NewCommentForm({ id, onAddComment, usersList }) {
+function NewCommentForm({ onAddComment }) {
     const [data, setData] = useState(initialData);
     const [errors, setErrors] = useState({});
     const validatorConfig = {

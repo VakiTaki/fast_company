@@ -27,10 +27,12 @@ const CommentsProvider = ({ children }) => {
             userId: currentUser._id
         };
         try {
-            const content = await commentsService.createComment(comment);
+            const { content } = await commentsService.createComment(comment);
             setIsLoading(false);
+            setComments((prev) => [...prev, content]);
             return content;
         } catch (error) {
+            console.log("error");
             errorCatcher(error);
         }
     }
@@ -38,6 +40,19 @@ const CommentsProvider = ({ children }) => {
         try {
             const { content } = await commentsService.getComments(id);
             setComments(content);
+            return content;
+        } catch (error) {
+            errorCatcher(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    async function removeComment(id) {
+        try {
+            const { content } = await commentsService.removeComment(id);
+            if (content === null) {
+                setComments((prev) => prev.filter((com) => com._id !== id));
+            }
             return content;
         } catch (error) {
             errorCatcher(error);
@@ -57,9 +72,11 @@ const CommentsProvider = ({ children }) => {
     }, [error]);
     useEffect(() => {
         getComments();
-    }, []);
+    }, [id]);
     return (
-        <CommentContext.Provider value={{ comments, createComment, isLoading }}>
+        <CommentContext.Provider
+            value={{ comments, createComment, isLoading, removeComment }}
+        >
             {children}
         </CommentContext.Provider>
     );

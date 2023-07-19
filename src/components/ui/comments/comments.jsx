@@ -1,70 +1,34 @@
-import React, { useState, useRef, useEffect } from "react";
-import api from "../../../api";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import React from "react";
 import NewCommentForm from "./newCommentForm";
 import CommentsList from "./commentsList";
 import { useComments } from "../../../hooks/useComments";
 
 function Comments() {
-    const { createComment } = useComments();
-    const { id } = useParams();
-    const userRef = useRef();
-    const [commentsList, setCommenstList] = useState([]);
-    const [usersList, setUsersList] = useState([]);
-    const [user, setUser] = useState();
+    const { comments, createComment, removeComment } = useComments();
     const handleDeleteComment = (id) => {
-        api.comments
-            .remove(id)
-            .then((data) =>
-                setCommenstList(
-                    commentsList.filter((comment) => comment._id !== data)
-                )
-            );
+        removeComment(id);
     };
     const handleAddComment = (data) => {
         createComment(data);
-        // api.comments
-        //     .fetchCommentsForUser(id)
-        //     .then((data) => setCommenstList(data));
     };
-    useEffect(() => {
-        api.users.getById(id).then((data) => setUser(data));
-        api.users.fetchAll().then((data) => {
-            const userList = Object.keys(data).map((user) => ({
-                label: data[user].name,
-                value: data[user]._id
-            }));
-            setUsersList(userList);
-        });
-        api.comments
-            .fetchCommentsForUser(id)
-            .then((data) => setCommenstList(data));
-    }, []);
-    useEffect(() => {
-        userRef.current = user;
-    }, [user]);
-    const sortedComentList = commentsList.sort(
+
+    const sortedComentList = comments.sort(
         (a, b) => parseFloat(b.created_at) - parseFloat(a.created_at)
     );
     return (
         <>
             <div className="card mb-2">
                 <div className="card-body">
-                    <NewCommentForm
-                        id={id}
-                        onAddComment={handleAddComment}
-                        usersList={usersList}
-                    />
+                    <NewCommentForm onAddComment={handleAddComment} />
                 </div>
             </div>
 
-            {!!commentsList.length && !!usersList.length && (
+            {!!sortedComentList.length && (
                 <div className="card mb-3">
                     <div className="card-body">
                         <CommentsList
                             commentsList={sortedComentList}
                             onDelete={handleDeleteComment}
-                            usersList={usersList}
                         />
                     </div>
                 </div>
