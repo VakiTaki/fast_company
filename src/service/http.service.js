@@ -60,7 +60,8 @@ const httpService = {
    get: apiURL.get,
    post: apiURL.post,
    put: apiURL.put,
-   delete: apiURL.delete
+   delete: apiURL.delete,
+   patch: apiURL.patch
 };
 
 export default httpService;

@@ -33,6 +33,18 @@ const UserProvider = ({ children }) => {
             setIsLoading(false);
         }
     }
+    async function editUser(content) {
+        try {
+            const { data } = await userService.editUser(content);
+            console.log(data);
+            setIsLoading(false);
+            return data;
+        } catch (error) {
+            errorCatcher(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     function getUserById(id) {
         return users.find((u) => u._id === id);
     }
@@ -42,7 +54,9 @@ const UserProvider = ({ children }) => {
         setError(message);
     }
     return (
-        <UserContext.Provider value={{ users, getUserById, getUsers }}>
+        <UserContext.Provider
+            value={{ users, getUserById, getUsers, editUser }}
+        >
             {!isLoading ? children : <h1>Loading...</h1>}
         </UserContext.Provider>
     );

@@ -1,30 +1,33 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import EditUserForm from "../../ui/editUserForm";
-import { useParams } from "react-router-dom";
-import { useUser } from "../../../hooks/useUsers";
+import { useParams, useHistory } from "react-router-dom";
 import { useProfession } from "../../../hooks/useProfession";
 import { useQuality } from "../../../hooks/useQuality";
+import { useAuth } from "../../../hooks/useAuth";
 
 function UserEditPage() {
+    const history = useHistory();
     const { id } = useParams();
-    const userRef = useRef();
-    const { getUserById } = useUser();
-    const user = getUserById(id);
-    const { profession } = useProfession();
-    const { quality } = useQuality();
+    const { currentUser } = useAuth();
     useEffect(() => {
-        userRef.current = user;
-    }, [user]);
+        if (id !== currentUser._id) {
+            history.push(`/users/${currentUser._id}/edit`);
+        }
+    }, []);
+    const { profession, isLoading: professionsIsLoading } = useProfession();
+    const { quality, isLoading: qualitiesIsLoading } = useQuality();
     return (
         <div className="conteiner mt-5 ">
             <div className="row">
-                <div className="col-md-6 offset-md-3 shadow p-4">
-                    <EditUserForm
-                        user={user}
-                        professions={profession}
-                        qualities={quality}
-                    />
-                </div>
+                {!professionsIsLoading && !qualitiesIsLoading && (
+                    <div className="col-md-6 offset-md-3 shadow p-4">
+                        <EditUserForm
+                            user={currentUser}
+                            professions={profession}
+                            qualities={quality}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

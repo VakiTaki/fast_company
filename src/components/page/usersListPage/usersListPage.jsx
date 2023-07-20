@@ -108,7 +108,9 @@ const UsersListPage = () => {
         ? users.filter((user) => user.profession === selectedProf._id)
         : users;
     const sortedUsers = _.orderBy(filterUsers, [sortBy.iter], [sortBy.order]);
-    const count = sortedUsers.length;
+    const count = sortedUsers.filter(
+        (user) => user._id !== currentUser._id
+    ).length;
     const userCrop = paginate(
         sortedUsers.filter((user) => user._id !== currentUser._id),
         currentPage,

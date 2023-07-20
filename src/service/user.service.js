@@ -15,6 +15,10 @@ const userService = {
    getCurrentUser: async () => {
       const { data } = await httpService.get(userEndpoint + localStorageServise.getUserId());
       return data;
+   },
+   editUser: async (content) => {
+      const { data } = await httpService.patch(userEndpoint + localStorageServise.getUserId(), content);
+      return data;
    }
 };
 export default userService;
