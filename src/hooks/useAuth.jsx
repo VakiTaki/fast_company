@@ -76,13 +76,13 @@ const AuthProvider = ({ children }) => {
             if (code === 400) {
                 if (message === "EMAIL_NOT_FOUND") {
                     const errorObject = {
-                        email: "Пользователь с такой почтой не сущетвует"
+                        password: "Неверные данные для входа"
                     };
                     throw errorObject;
                 }
                 if (message === "INVALID_PASSWORD") {
                     const errorObject = {
-                        password: "Неверный пароль"
+                        password: "Неверные данные для входа"
                     };
                     throw errorObject;
                 }
@@ -96,6 +96,18 @@ const AuthProvider = ({ children }) => {
             return content;
         } catch (error) {
             errorCatcher(error);
+        }
+    }
+    async function editUser(data) {
+        try {
+            const { content } = await userService.editUser(data);
+            setCurrentUser(content);
+            setIsLoading(false);
+            return content;
+        } catch (error) {
+            errorCatcher(error);
+        } finally {
+            setIsLoading(false);
         }
     }
     const logOut = () => {
@@ -132,7 +144,9 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
     return (
-        <AuthContext.Provider value={{ signUp, signIn, currentUser, logOut }}>
+        <AuthContext.Provider
+            value={{ signUp, signIn, currentUser, logOut, editUser }}
+        >
             {!isLoading ? children : "Загрузка..."}
         </AuthContext.Provider>
     );

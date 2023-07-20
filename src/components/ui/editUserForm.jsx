@@ -7,11 +7,11 @@ import CheckBoxField from "../common/form/checkBoxField";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useQuality } from "../../hooks/useQuality";
-import { useUser } from "../../hooks/useUsers";
+import { useAuth } from "../../hooks/useAuth";
 
 function EditUserForm({ user, qualities, professions }) {
     const history = useHistory();
-    const { editUser } = useUser();
+    const { editUser } = useAuth();
     const { getQualityById } = useQuality();
     const [data, setData] = useState({
         email: user.email,
@@ -85,6 +85,7 @@ function EditUserForm({ user, qualities, professions }) {
         const isValid = validate();
         if (!isValid) return;
         const newData = {
+            ...user,
             ...data,
             qualities: data.qualities.map((q) => {
                 return q.value;

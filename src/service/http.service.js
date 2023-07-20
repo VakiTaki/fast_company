@@ -8,7 +8,7 @@ import localStorageServise from "./localStorage.service";
 // axios.defaults.baseURL(config.endPoint)
 const apiURL = axios.create({ baseURL: configFile.apiEndpoint });
 function transformData(data) {
-   return data && !data._id ? Object.values(data) : data;
+   return (data && !data._id) ? Object.values(data) : data;
 }
 apiURL.interceptors.request.use(
    async function (config) {
