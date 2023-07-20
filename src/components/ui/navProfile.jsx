@@ -7,6 +7,9 @@ function NavProfile() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const toggleMenu = () => {
         setIsOpenMenu((prev) => !prev);
+        setTimeout(() => {
+            setIsOpenMenu(false);
+        }, 3000);
     };
     return (
         <div className="dropdown" onClick={() => toggleMenu()}>

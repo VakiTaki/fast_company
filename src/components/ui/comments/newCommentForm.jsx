@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextAreaField from "../../common/form/textareaField";
-import { validator } from "../../../utils/validator";
 import { PropTypes } from "prop-types";
 
 const initialData = {
@@ -9,21 +8,6 @@ const initialData = {
 
 function NewCommentForm({ onAddComment }) {
     const [data, setData] = useState(initialData);
-    const [errors, setErrors] = useState({});
-    const validatorConfig = {
-        content: {
-            isRequired: {
-                message: "Сообщение не может быть пустым"
-            }
-        }
-    };
-    const [isDirty, setIsDirty] = useState(false);
-    const validate = () => {
-        const errors = validator(data, validatorConfig);
-        setErrors(errors);
-        return !Object.keys(errors).length;
-    };
-    const isValid = isDirty ? !Object.keys(errors).length : false;
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
@@ -31,23 +15,12 @@ function NewCommentForm({ onAddComment }) {
         e.preventDefault();
         onAddComment(data);
         clearForm();
-        // getComments.comments.add({ ...data, pageId: id }).then(() => {
-        //     setData(initialData);
-        //     setErrors({});
-        //     onAddComment();
-        //     setIsDirty(false);
-        // });
     };
     const clearForm = () => {
         setData(initialData);
     };
-    useEffect(() => {
-        if (isDirty) {
-            validate();
-        }
-    }, [data, isDirty]);
     return (
-        <form onSubmit={handleSubmit} onFocus={() => setIsDirty(true)}>
+        <form onSubmit={handleSubmit}>
             <h2>Новый комментарий</h2>
             <div className="mb-4">
                 <TextAreaField
@@ -57,14 +30,13 @@ function NewCommentForm({ onAddComment }) {
                     rows="3"
                     value={data.content || ""}
                     onChange={handleChange}
-                    error={errors.content}
                     label={"Сообщение"}
                 ></TextAreaField>
             </div>
             <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={!isValid}
+                disabled={!data.content.length > 0}
             >
                 Добавить комментарий
             </button>
