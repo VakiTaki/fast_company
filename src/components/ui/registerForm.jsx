@@ -96,7 +96,7 @@ function RegisterForm() {
         const newData = {
             ...data,
             qualities: data.qualities.map((q) => q.value),
-            bookmark: false,
+            bookmark: [],
             completedMeetings: randomInt(0, 200),
             rate: randomInt(1, 5)
         };

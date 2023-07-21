@@ -5,14 +5,15 @@ import PropTypes from "prop-types";
 function QualityList({ qualities }) {
     return (
         <>
-            {qualities.map((qualityId) => (
-                <Quality id={qualityId} key={qualityId} />
-            ))}
+            {qualities &&
+                qualities.map((qualityId) => (
+                    <Quality id={qualityId} key={qualityId} />
+                ))}
         </>
     );
 }
 QualityList.propTypes = {
-    qualities: PropTypes.array.isRequired
+    qualities: PropTypes.array
 };
 
 export default QualityList;

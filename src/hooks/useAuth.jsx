@@ -25,6 +25,7 @@ const AuthProvider = ({ children }) => {
     const history = useHistory();
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingUser, setIsLoadingUser] = useState(false);
     const [currentUser, setCurrentUser] = useState();
     async function signUp({ email, password, ...rest }) {
         try {
@@ -99,15 +100,18 @@ const AuthProvider = ({ children }) => {
         }
     }
     async function editUser(data) {
+        const prevCurrentUser = currentUser;
+        setCurrentUser(data);
         try {
+            setIsLoadingUser(true);
             const { content } = await userService.editUser(data);
             setCurrentUser(content);
-            setIsLoading(false);
             return content;
         } catch (error) {
+            setCurrentUser(prevCurrentUser);
             errorCatcher(error);
         } finally {
-            setIsLoading(false);
+            setIsLoadingUser(false);
         }
     }
     const logOut = () => {
@@ -116,8 +120,8 @@ const AuthProvider = ({ children }) => {
         history.push("/");
     };
     function errorCatcher(error) {
-        const { message } = error.response.data;
-        setError(message);
+        const { message } = error;
+        setError(message || "No message error");
     }
     const getUserData = async () => {
         try {
@@ -145,7 +149,14 @@ const AuthProvider = ({ children }) => {
     }, [error]);
     return (
         <AuthContext.Provider
-            value={{ signUp, signIn, currentUser, logOut, editUser }}
+            value={{
+                signUp,
+                signIn,
+                currentUser,
+                logOut,
+                editUser,
+                isLoadingUser
+            }}
         >
             {!isLoading ? children : "Загрузка..."}
         </AuthContext.Provider>

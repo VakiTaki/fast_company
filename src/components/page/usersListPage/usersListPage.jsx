@@ -12,7 +12,7 @@ import { useProfession } from "../../../hooks/useProfession";
 import { useAuth } from "../../../hooks/useAuth";
 
 const UsersListPage = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, editUser } = useAuth();
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
@@ -51,8 +51,21 @@ const UsersListPage = () => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-    const handleToogleBookmark = (id) => {
-        console.log(id);
+    const handleToogleBookmark = async (id) => {
+        const isBookmark = currentUser.bookmark
+            ? currentUser.bookmark.some((u) => u === id)
+            : false;
+        const newData = {
+            ...currentUser,
+            bookmark: currentUser.bookmark
+                ? isBookmark
+                    ? currentUser.bookmark.filter((u) => u !== id)
+                    : !currentUser.bookmark
+                    ? [id]
+                    : [...currentUser.bookmark, id]
+                : [id]
+        };
+        await editUser(newData);
     };
     const handleProfessionSListelect = (item) => {
         setSearchText("");
