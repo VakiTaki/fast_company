@@ -24,7 +24,7 @@ const QualityProvider = ({ children }) => {
     async function getQuality() {
         try {
             const { content } = await qualityService.get();
-            setQuality(content);
+            setQuality(content || []);
             setIsLoading(false);
             return content;
         } catch (error) {
@@ -33,7 +33,7 @@ const QualityProvider = ({ children }) => {
     }
     function errorCatcher(error) {
         const { message } = error.response.data;
-        setError(message);
+        setError(message || "No message error");
     }
     function getQualityById(id) {
         return quality.find((q) => q._id === id);

@@ -33,7 +33,7 @@ const ProfessionProvider = ({ children }) => {
     }
     function errorCatcher(error) {
         const { message } = error.response.data;
-        setError(message);
+        setError(message || "No message error");
     }
     function getProfessionById(id) {
         return profession.find((prof) => prof._id === id);

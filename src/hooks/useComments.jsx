@@ -62,7 +62,7 @@ const CommentsProvider = ({ children }) => {
     }
     function errorCatcher(error) {
         const { message } = error.response.data;
-        setError(message);
+        setError(message || "No message error");
     }
     useEffect(() => {
         if (error !== null) {
