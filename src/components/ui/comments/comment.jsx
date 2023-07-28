@@ -49,7 +49,7 @@ function Comment({ comment, onDelete }) {
                             </button>
                         )}
                     </div>
-                    <p className="small mb-0">{comment.content}</p>
+                    <p className="small mb-0 text-break">{comment.content}</p>
                 </div>
             </div>
         </div>
