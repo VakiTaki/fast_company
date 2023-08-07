@@ -7,17 +7,17 @@ import Loader from "../../common/loader";
 import UsersTable from "../../ui/usersTable";
 import _ from "lodash";
 import TextField from "../../common/form/textField";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getProfessions } from "../../../store/professions";
+import { getUsers } from "../../../store/users";
 
 const UsersListPage = () => {
     const { currentUser, editUser } = useAuth();
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
-    const { users } = useUser();
+    const users = useSelector(getUsers());
     const allProfession = { _id: "0", name: "Все профессии" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const pageSize = 4;

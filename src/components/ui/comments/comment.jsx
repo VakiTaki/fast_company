@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes, { array, func } from "prop-types";
 import { dataFormat } from "../../../utils/dataFormat";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getUserById } from "../../../store/users";
 
 function Comment({ comment, onDelete }) {
     const { currentUser } = useAuth();
-    const { getUserById } = useUser();
-    const user = getUserById(comment.userId);
+    const user = useSelector(getUserById(comment.userId));
     return (
         <div className="d-flex flex-start">
             {user ? (

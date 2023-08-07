@@ -6,8 +6,9 @@ import UserCard from "../../ui/userInfo/userCard";
 import QualitiesCard from "../../ui/userInfo/qualitiesCard";
 import MeetingsCard from "../../ui/userInfo/meetingsCard";
 import Comments from "../../ui/comments/comments";
-import { useUser } from "../../../hooks/useUsers";
 import CommentsProvider from "../../../hooks/useComments";
+import { getUserById } from "../../../store/users";
+import { useSelector } from "react-redux";
 
 function userInfoPage({ id }) {
     const userRef = useRef();
@@ -15,8 +16,7 @@ function userInfoPage({ id }) {
     const handleToUsers = () => {
         history.replace(`/users`);
     };
-    const { getUserById } = useUser();
-    const user = getUserById(id);
+    const user = useSelector(getUserById(id));
     const [hasUser, setHasUser] = useState(false);
     useEffect(() => {
         setTimeout(() => {

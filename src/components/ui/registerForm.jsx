@@ -4,16 +4,14 @@ import { validator } from "../../utils/validator";
 import SelectField from "../common/form/selectField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useAuth } from "../../hooks/useAuth";
 import { randomInt } from "../../utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getQialities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
+import { signUp } from "../../store/users";
 
 function RegisterForm() {
-    const history = useHistory();
-    const { signUp } = useAuth();
+    const dispatch = useDispatch();
     const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
     const [data, setData] = useState({
@@ -90,7 +88,7 @@ function RegisterForm() {
             return { label: qual.name, value: qual._id };
         });
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -101,12 +99,7 @@ function RegisterForm() {
             completedMeetings: randomInt(0, 200),
             rate: randomInt(1, 5)
         };
-        try {
-            await signUp(newData);
-            history.push("/");
-        } catch (error) {
-            setErrors(error);
-        }
+        dispatch(signUp(newData));
     };
     return (
         <form onSubmit={handleSubmit}>

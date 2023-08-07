@@ -40,7 +40,9 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
 export const getQialities = () => (state) => state.qualities.entities;
 export const getQualitiesLoadingStatus = () => (state) => state.qualities.isLoading;
 export const getQialityById = (id) => (state) => {
-   return state.qualities.entities.find((q) => q._id === id);
+   if (state.users.entities) {
+      return state.qualities.entities.find((q) => q._id === id);
+   }
 };
 
 export default qualitiesReducer;
