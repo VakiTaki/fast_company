@@ -6,15 +6,16 @@ import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useProfession } from "../../hooks/useProfession";
-import { useQuality } from "../../hooks/useQuality";
 import { useAuth } from "../../hooks/useAuth";
 import { randomInt } from "../../utils";
+import { useSelector } from "react-redux";
+import { getQialities } from "../../store/qualities";
 
 function RegisterForm() {
     const history = useHistory();
     const { signUp } = useAuth();
     const { profession } = useProfession();
-    const { quality } = useQuality();
+    const qualities = useSelector(getQialities());
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -85,7 +86,7 @@ function RegisterForm() {
         });
     };
     const qualitiesToOption = () => {
-        return quality.map((qual) => {
+        return qualities.map((qual) => {
             return { label: qual.name, value: qual._id };
         });
     };
@@ -146,7 +147,7 @@ function RegisterForm() {
                 isMulti
                 name="qualities"
                 label="Твои качества"
-                options={qualitiesToOption(quality)}
+                options={qualitiesToOption(qualities)}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={handleChange}

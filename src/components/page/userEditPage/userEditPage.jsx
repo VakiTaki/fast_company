@@ -2,8 +2,12 @@ import React, { useEffect } from "react";
 import EditUserForm from "../../ui/editUserForm";
 import { useParams, useHistory } from "react-router-dom";
 import { useProfession } from "../../../hooks/useProfession";
-import { useQuality } from "../../../hooks/useQuality";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getQialities,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
 
 function UserEditPage() {
     const history = useHistory();
@@ -15,7 +19,8 @@ function UserEditPage() {
         }
     }, []);
     const { profession, isLoading: professionsIsLoading } = useProfession();
-    const { quality, isLoading: qualitiesIsLoading } = useQuality();
+    const qualities = useSelector(getQialities());
+    const qualitiesIsLoading = useSelector(getQualitiesLoadingStatus());
     return (
         <div className="conteiner mt-5 ">
             <div className="row">
@@ -24,7 +29,7 @@ function UserEditPage() {
                         <EditUserForm
                             user={currentUser}
                             professions={profession}
-                            qualities={quality}
+                            qualities={qualities}
                         />
                     </div>
                 )}

@@ -6,19 +6,17 @@ import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { useQuality } from "../../hooks/useQuality";
 import { useAuth } from "../../hooks/useAuth";
 
 function EditUserForm({ user, qualities, professions }) {
     const history = useHistory();
     const { editUser } = useAuth();
-    const { getQualityById } = useQuality();
     const [data, setData] = useState({
         email: user.email,
         name: user.name,
         profession: user.profession,
         qualities: user.qualities.map((qual) => {
-            const q = getQualityById(qual);
+            const q = qualities.find((q) => qual === q._id);
             return { label: q.name, value: q._id, color: q.color };
         }),
         isValidData: false
