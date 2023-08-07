@@ -5,16 +5,16 @@ import SelectField from "../common/form/selectField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useProfession } from "../../hooks/useProfession";
 import { useAuth } from "../../hooks/useAuth";
 import { randomInt } from "../../utils";
 import { useSelector } from "react-redux";
 import { getQialities } from "../../store/qualities";
+import { getProfessions } from "../../store/professions";
 
 function RegisterForm() {
     const history = useHistory();
     const { signUp } = useAuth();
-    const { profession } = useProfession();
+    const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
     const [data, setData] = useState({
         name: "",
