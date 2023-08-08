@@ -6,11 +6,12 @@ import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { editUser } from "../../store/users";
 
 function EditUserForm({ user, qualities, professions }) {
+    const dispatch = useDispatch();
     const history = useHistory();
-    const { editUser } = useAuth();
     const [data, setData] = useState({
         email: user.email,
         name: user.name,
@@ -78,7 +79,7 @@ function EditUserForm({ user, qualities, professions }) {
     };
     const isValid = !Object.keys(errors).length;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -89,8 +90,7 @@ function EditUserForm({ user, qualities, professions }) {
                 return q.value;
             })
         };
-        await editUser(newData);
-        handleToUserPage();
+        dispatch(editUser(newData));
     };
     const handleToUserPage = () => {
         history.push(`/users/${user._id}`);

@@ -1,29 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
 import Users from "./layouts/users";
 import NavBar from "./components/ui/navBar/navBar";
 import UserEditPage from "./components/page/userEditPage";
-import UserProvider from "./hooks/useUsers";
 import { ToastContainer } from "react-toastify";
-import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
-import { useDispatch } from "react-redux";
-import { loadQualitiesList } from "./store/qualities";
-import { loadProfessionsList } from "./store/professions";
-import { loadUserList } from "./store/users";
+import AppLoader from "./components/ui/hoc/appLoader";
 
 function App() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(loadQualitiesList());
-        dispatch(loadProfessionsList());
-        dispatch(loadUserList());
-    }, []);
     return (
-        <AuthProvider>
+        <AppLoader>
             <div className="container">
                 <header>
                     <NavBar />
@@ -33,23 +22,21 @@ function App() {
                         <Route exact path="/" component={Main} />
                         <Route path="/logout" component={LogOut} />
                         <Route path="/login/:type?" component={Login} />
-                        <UserProvider>
-                            <ProtectedRoute
-                                path="/users/:id/edit"
-                                component={UserEditPage}
-                            />
-                            <ProtectedRoute
-                                exact
-                                path="/users/:id?"
-                                component={Users}
-                            />
-                        </UserProvider>
+                        <ProtectedRoute
+                            path="/users/:id/edit"
+                            component={UserEditPage}
+                        />
+                        <ProtectedRoute
+                            exact
+                            path="/users/:id?"
+                            component={Users}
+                        />
                         <Redirect to="/" />
                     </Switch>
                 </main>
                 <ToastContainer />
             </div>
-        </AuthProvider>
+        </AppLoader>
     );
 }
 

@@ -9,6 +9,7 @@
         "@testing-library/user-event": "^13.2.1",
         "axios": "^1.4.0",
         "bootstrap": "5.1.0",
+        "history": "4.9.0",
         "lodash": "4.17.15",
         "nanoid": "^4.0.2",
         "prettier": "^2.8.7",

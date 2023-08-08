@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import { useAuth } from "../../../hooks/useAuth";
+import localStorageServise from "../../../service/localStorage.service";
 
 function UserCard({ user }) {
-    const { currentUser } = useAuth();
+    const currentUser = { _id: localStorageServise.getUserId() };
     const history = useHistory();
     const handleToUserEditPage = () => {
         history.push(history.location.pathname + `/edit`);

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import EditUserForm from "../../ui/editUserForm";
 import { useParams, useHistory } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import {
     getQialities,
@@ -11,11 +10,12 @@ import {
     getProfessionsLoadingStatus,
     getProfessions
 } from "../../../store/professions";
+import { getUserById } from "../../../store/users";
 
 function UserEditPage() {
     const history = useHistory();
     const { id } = useParams();
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(getUserById(id));
     useEffect(() => {
         if (id !== currentUser._id) {
             history.push(`/users/${currentUser._id}/edit`);

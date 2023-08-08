@@ -4,7 +4,7 @@ import { isOutDate } from "../utils/isOutDate";
 
 const qualitiesSlice = createSlice({
    name: "qualities",
-   initialState: { entities: null, isLoading: true, error: null, lastFetch: null },
+   initialState: { entities: [], isLoading: true, error: null, lastFetch: null },
    reducers: {
       qualitiesRequested(state) {
          state.isLoading = true;

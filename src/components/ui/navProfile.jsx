@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUserById } from "../../store/users";
+import localStorageServise from "../../service/localStorage.service";
 
 function NavProfile() {
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(
+        getUserById(localStorageServise.getUserId())
+    );
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const toggleMenu = () => {
         setIsOpenMenu((prev) => !prev);

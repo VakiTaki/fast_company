@@ -4,7 +4,7 @@ import { isOutDate } from "../utils/isOutDate";
 
 const professionsSlice = createSlice({
    name: "professions",
-   initialState: { entities: null, isLoading: true, error: null, lastFetch: null },
+   initialState: { entities: [], isLoading: true, error: null, lastFetch: null },
    reducers: {
       professionsRequested(state) {
          state.isLoading = true;

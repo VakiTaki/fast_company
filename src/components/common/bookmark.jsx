@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useAuth } from "../../hooks/useAuth";
+import localStorageServise from "../../service/localStorage.service";
 
 function Bookmark({ onToogleBookmark, user }) {
     const clsIcon = "bi fs-3 text-warning bi-star";
-    const { currentUser } = useAuth();
+    const currentUser = { _id: localStorageServise.getUserId() };
     const isBookmark = currentUser.bookmark
         ? currentUser.bookmark.some((u) => u === user._id)
         : false;

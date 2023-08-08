@@ -8,7 +8,7 @@ import { randomInt } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getQialities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
-import { signUp } from "../../store/users";
+import { signUp, getUsersError } from "../../store/users";
 
 function RegisterForm() {
     const dispatch = useDispatch();
@@ -22,6 +22,7 @@ function RegisterForm() {
         qualities: [],
         licence: false
     });
+    const registerError = useSelector(getUsersError());
     const [errors, setErrors] = useState({});
     useEffect(() => {
         validate();
@@ -156,6 +157,7 @@ function RegisterForm() {
             >
                 Согласен с лицензионным соглашением
             </CheckBoxField>
+            {registerError && <p className="text-danger">{registerError}</p>}
             <button
                 className="btn btn-primary mx-auto w-100"
                 disabled={!isValid}

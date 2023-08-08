@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
 import NavProfile from "../navProfile";
+import { isLoggedIn } from "../../../store/users";
+import { useSelector } from "react-redux";
+import UsersLoader from "../hoc/usersLoader";
 
 const NavBar = () => {
-    const { currentUser } = useAuth();
+    const isAuth = useSelector(isLoggedIn());
     const navigation = [
         { id: 0, path: "/", title: "Главная", display: true },
         { id: 1, path: "/login", title: "Вход", display: false },
-        { id: 2, path: "/users", title: "Пользователи", display: !!currentUser }
+        { id: 2, path: "/users", title: "Пользователи", display: !!isAuth }
     ];
     return (
         <nav className="navbar bg-light mb-3 rounded-bottom rounded-3">
@@ -31,8 +33,10 @@ const NavBar = () => {
                     })}
                 </ul>
                 <div className="d-flex">
-                    {currentUser ? (
-                        <NavProfile />
+                    {isAuth ? (
+                        <UsersLoader>
+                            <NavProfile />
+                        </UsersLoader>
                     ) : (
                         <Link className="nav-link" to={"/login"}>
                             {"Вход"}

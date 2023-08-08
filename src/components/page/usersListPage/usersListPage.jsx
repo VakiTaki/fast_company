@@ -7,13 +7,13 @@ import Loader from "../../common/loader";
 import UsersTable from "../../ui/usersTable";
 import _ from "lodash";
 import TextField from "../../common/form/textField";
-import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getProfessions } from "../../../store/professions";
 import { getUsers } from "../../../store/users";
+import localStorageServise from "../../../service/localStorage.service";
 
 const UsersListPage = () => {
-    const { currentUser, editUser } = useAuth();
+    const currentUser = { _id: localStorageServise.getUserId() };
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
@@ -53,20 +53,20 @@ const UsersListPage = () => {
         setCurrentPage(pageIndex);
     };
     const handleToogleBookmark = async (id) => {
-        const isBookmark = currentUser.bookmark
-            ? currentUser.bookmark.some((u) => u === id)
-            : false;
-        const newData = {
-            ...currentUser,
-            bookmark: currentUser.bookmark
-                ? isBookmark
-                    ? currentUser.bookmark.filter((u) => u !== id)
-                    : !currentUser.bookmark
-                    ? [id]
-                    : [...currentUser.bookmark, id]
-                : [id]
-        };
-        await editUser(newData);
+        // const isBookmark = currentUser.bookmark
+        //     ? currentUser.bookmark.some((u) => u === id)
+        //     : false;
+        // const newData = {
+        //     ...currentUser,
+        //     bookmark: currentUser.bookmark
+        //         ? isBookmark
+        //             ? currentUser.bookmark.filter((u) => u !== id)
+        //             : !currentUser.bookmark
+        //             ? [id]
+        //             : [...currentUser.bookmark, id]
+        //         : [id]
+        // };
+        // await editUser(newData);
     };
     const handleProfessionSListelect = (item) => {
         setSearchText("");

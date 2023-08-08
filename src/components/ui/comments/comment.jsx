@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes, { array, func } from "prop-types";
 import { dataFormat } from "../../../utils/dataFormat";
-import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getUserById } from "../../../store/users";
+import localStorageServise from "../../../service/localStorage.service";
 
 function Comment({ comment, onDelete }) {
-    const { currentUser } = useAuth();
+    const currentUser = { _id: localStorageServise.getUserId() };
     const user = useSelector(getUserById(comment.userId));
     return (
         <div className="d-flex flex-start">
