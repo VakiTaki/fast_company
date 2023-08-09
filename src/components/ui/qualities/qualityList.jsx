@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Quality from "./quality";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { loadQualitiesList } from "../../../store/qualities";
 
 function QualityList({ qualities }) {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(loadQualitiesList());
-    }, []);
     return (
         <>
             {qualities &&

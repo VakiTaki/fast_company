@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import {
     getProfessionById,
     getProfessionsLoadingStatus
-} from "../../store/professions";
+} from "../../store/professionsSlice";
 
 function Profession({ id }) {
     const isLoading = useSelector(getProfessionsLoadingStatus());

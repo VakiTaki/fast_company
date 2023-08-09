@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes, { array, func } from "prop-types";
 import { dataFormat } from "../../../utils/dataFormat";
 import { useSelector } from "react-redux";
-import { getUserById } from "../../../store/users";
+import { getUserById } from "../../../store/usersSlice";
 import localStorageServise from "../../../service/localStorage.service";
 
 function Comment({ comment, onDelete }) {

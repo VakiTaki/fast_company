@@ -110,9 +110,9 @@ const createUser = (data) => async (dispatch) => {
    dispatch(createUserRequested());
    try {
       const { content } = await userService.create(data);
-      console.log(content);
       dispatch(createdUser(data));
       history.push("/users");
+      return content;
    } catch (error) {
       dispatch(createUserFiled(error.message));
    }

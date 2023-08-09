@@ -6,9 +6,9 @@ import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { randomInt } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { getQialities } from "../../store/qualities";
-import { getProfessions } from "../../store/professions";
-import { signUp, getUsersError } from "../../store/users";
+import { getQialities } from "../../store/qualitiesSlice";
+import { getProfessions } from "../../store/professionsSlice";
+import { signUp, getUsersError } from "../../store/usersSlice";
 
 function RegisterForm() {
     const dispatch = useDispatch();

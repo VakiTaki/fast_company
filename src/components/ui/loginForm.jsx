@@ -3,7 +3,7 @@ import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn, getUsersError } from "../../store/users";
+import { signIn, getUsersError } from "../../store/usersSlice";
 import history from "../../utils/histoty";
 
 function LoginForm() {

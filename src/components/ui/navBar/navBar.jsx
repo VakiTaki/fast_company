@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavProfile from "../navProfile";
-import { isLoggedIn } from "../../../store/users";
+import { isLoggedIn } from "../../../store/usersSlice";
 import { useSelector } from "react-redux";
 import UsersLoader from "../hoc/usersLoader";
 

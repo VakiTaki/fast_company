@@ -8,8 +8,8 @@ import UsersTable from "../../ui/usersTable";
 import _ from "lodash";
 import TextField from "../../common/form/textField";
 import { useSelector } from "react-redux";
-import { getProfessions } from "../../../store/professions";
-import { getUsers } from "../../../store/users";
+import { getProfessions } from "../../../store/professionsSlice";
+import { getUsers } from "../../../store/usersSlice";
 import localStorageServise from "../../../service/localStorage.service";
 
 const UsersListPage = () => {

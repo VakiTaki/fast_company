@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { isDataLoaded, loadUserList } from "../../../store/users";
+import { isDataLoaded, loadUserList } from "../../../store/usersSlice";
 
 function UsersLoader({ children }) {
     const dispatch = useDispatch();

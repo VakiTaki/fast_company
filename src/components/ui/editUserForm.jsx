@@ -7,7 +7,7 @@ import CheckBoxField from "../common/form/checkBoxField";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { editUser } from "../../store/users";
+import { editUser } from "../../store/usersSlice";
 
 function EditUserForm({ user, qualities, professions }) {
     const dispatch = useDispatch();

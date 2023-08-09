@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import {
     getQialities,
     getQualitiesLoadingStatus
-} from "../../../store/qualities";
+} from "../../../store/qualitiesSlice";
 import {
     getProfessionsLoadingStatus,
     getProfessions
-} from "../../../store/professions";
-import { getUserById } from "../../../store/users";
+} from "../../../store/professionsSlice";
+import { getUserById } from "../../../store/usersSlice";
 
 function UserEditPage() {
     const history = useHistory();

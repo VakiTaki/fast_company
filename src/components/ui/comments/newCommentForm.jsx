@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import TextAreaField from "../../common/form/textareaField";
 import { PropTypes } from "prop-types";
+import { useParams } from "react-router-dom";
 
 const initialData = {
     content: ""
 };
 
 function NewCommentForm({ onAddComment }) {
+    const { id: pageId } = useParams();
     const [data, setData] = useState(initialData);
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAddComment(data);
+        onAddComment({ ...data, pageId });
         clearForm();
     };
     const clearForm = () => {

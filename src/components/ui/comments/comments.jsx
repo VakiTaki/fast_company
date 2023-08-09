@@ -1,20 +1,22 @@
 import React from "react";
 import NewCommentForm from "./newCommentForm";
 import CommentsList from "./commentsList";
-import { useComments } from "../../../hooks/useComments";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    createComment,
+    getComments,
+    removeComment
+} from "../../../store/commentsSlice";
 
 function Comments() {
-    const { comments, createComment, removeComment } = useComments();
+    const dispatch = useDispatch();
+    const comments = useSelector(getComments());
     const handleDeleteComment = (id) => {
-        removeComment(id);
+        dispatch(removeComment(id));
     };
     const handleAddComment = (data) => {
-        createComment(data);
+        dispatch(createComment(data));
     };
-
-    const sortedComentList = comments.sort(
-        (a, b) => parseFloat(b.created_at) - parseFloat(a.created_at)
-    );
     return (
         <>
             <div className="card mb-2">
@@ -23,11 +25,11 @@ function Comments() {
                 </div>
             </div>
 
-            {!!sortedComentList.length && (
+            {!!comments.length && (
                 <div className="card mb-3">
                     <div className="card-body">
                         <CommentsList
-                            commentsList={sortedComentList}
+                            commentsList={comments}
                             onDelete={handleDeleteComment}
                         />
                     </div>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
-import { isLoggedIn } from "../../store/users";
+import { isLoggedIn } from "../../store/usersSlice";
 
 function ProtectedRoute({ component: Component, children, ...rest }) {
     const isAuth = useSelector(isLoggedIn());

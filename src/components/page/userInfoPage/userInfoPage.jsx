@@ -6,9 +6,9 @@ import UserCard from "../../ui/userInfo/userCard";
 import QualitiesCard from "../../ui/userInfo/qualitiesCard";
 import MeetingsCard from "../../ui/userInfo/meetingsCard";
 import Comments from "../../ui/comments/comments";
-import CommentsProvider from "../../../hooks/useComments";
-import { getUserById } from "../../../store/users";
+import { getUserById } from "../../../store/usersSlice";
 import { useSelector } from "react-redux";
+import CommentsLoader from "../../ui/hoc/commentsLoader";
 
 function userInfoPage({ id }) {
     const userRef = useRef();
@@ -42,9 +42,9 @@ function userInfoPage({ id }) {
                             <MeetingsCard meetings={user.completedMeetings} />
                         </div>
                         <div className="col-md-8">
-                            <CommentsProvider>
+                            <CommentsLoader>
                                 <Comments />
-                            </CommentsProvider>
+                            </CommentsLoader>
                         </div>
                     </div>
                 </div>
