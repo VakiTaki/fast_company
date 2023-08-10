@@ -17,8 +17,9 @@ apiURL.interceptors.request.use(
          config.url = (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
          const expiresDate = localStorageServise.getExpiresToken();
          const refreshToken = localStorageServise.getRefreshToken();
-         if (refreshToken && expiresDate < Date.now()) {
-            const { data } = await authService.refresh();
+         if (refreshToken && (expiresDate < Date.now())) {
+            const data = await authService.refresh();
+            console.log(data);
             localStorageServise.setTokens({
                refreshToken: data.refresh_token,
                idToken: data.id_token,

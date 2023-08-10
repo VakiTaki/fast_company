@@ -104,8 +104,7 @@ function RegisterForm() {
             ...data,
             qualities: data.qualities?.map((q) => q.value),
             bookmark: [],
-            completedMeetings: randomInt(0, 200),
-            rate: randomInt(1, 5)
+            completedMeetings: randomInt(0, 200)
         };
         dispatch(signUp(newData));
     };

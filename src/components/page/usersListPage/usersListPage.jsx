@@ -15,6 +15,7 @@ import {
     getUsers
 } from "../../../store/usersSlice";
 import localStorageServise from "../../../service/localStorage.service";
+import { getRateForId } from "../../../store/ratesSlice";
 
 const UsersListPage = () => {
     const dispatch = useDispatch();
@@ -24,7 +25,11 @@ const UsersListPage = () => {
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");
-    const users = useSelector(getUsers());
+    let users = useSelector(getUsers());
+    users = users.map((user) => ({
+        ...user,
+        rate: useSelector(getRateForId(user._id))
+    }));
     const allProfession = { _id: "0", name: "Все профессии" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const pageSize = 4;

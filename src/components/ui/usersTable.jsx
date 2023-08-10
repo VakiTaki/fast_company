@@ -34,7 +34,7 @@ function UsersTable({ userCrop, onToogleBookmark, onSort, selectedSort }) {
             path: "completedMeetings",
             name: "Встретился, раз"
         },
-        rate: { path: "rate", name: "Оценка" },
+        rate: { path: "rate", name: "Рейтинг" },
         bookmark: {
             path: "bookmark",
             name: "Избранное",

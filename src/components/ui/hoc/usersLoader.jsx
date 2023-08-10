@@ -8,6 +8,7 @@ import {
 } from "../../../store/usersSlice";
 import localStorageServise from "../../../service/localStorage.service";
 import LogOut from "../../../layouts/logOut";
+import { addRateList } from "../../../store/ratesSlice";
 
 function UsersLoader({ children }) {
     const dispatch = useDispatch();
@@ -20,6 +21,8 @@ function UsersLoader({ children }) {
         }
     }, []);
     if (!dataStatus && isLoading) return "Загрузка User";
+    dispatch(addRateList());
+
     return <>{currentUserId ? children : <LogOut />}</>;
 }
 
