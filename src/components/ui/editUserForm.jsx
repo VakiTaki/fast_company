@@ -16,7 +16,7 @@ function EditUserForm({ user, qualities, professions }) {
         email: user.email,
         name: user.name,
         profession: user.profession,
-        qualities: user.qualities.map((qual) => {
+        qualities: user.qualities?.map((qual) => {
             const q = qualities.find((q) => qual === q._id);
             return { label: q.name, value: q._id, color: q.color };
         }),
@@ -86,7 +86,7 @@ function EditUserForm({ user, qualities, professions }) {
         const newData = {
             ...user,
             ...data,
-            qualities: data.qualities.map((q) => {
+            qualities: data.qualities?.map((q) => {
                 return q.value;
             })
         };

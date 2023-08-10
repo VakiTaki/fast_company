@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavProfile from "../navProfile";
-import { isLoggedIn } from "../../../store/usersSlice";
+import { getIsLoggedIn } from "../../../store/usersSlice";
 import { useSelector } from "react-redux";
 import UsersLoader from "../hoc/usersLoader";
 
 const NavBar = () => {
-    const isAuth = useSelector(isLoggedIn());
+    const isAuth = useSelector(getIsLoggedIn());
     const navigation = [
         { id: 0, path: "/", title: "Главная", display: true },
         { id: 1, path: "/login", title: "Вход", display: false },

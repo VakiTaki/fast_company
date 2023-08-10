@@ -8,10 +8,17 @@ import { randomInt } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getQialities } from "../../store/qualitiesSlice";
 import { getProfessions } from "../../store/professionsSlice";
-import { signUp, getUsersError } from "../../store/usersSlice";
+import { signUp, getUsersError, getIsLoggedIn } from "../../store/usersSlice";
+import history from "../../utils/histoty";
 
 function RegisterForm() {
     const dispatch = useDispatch();
+    const isAuth = useSelector(getIsLoggedIn());
+    useEffect(() => {
+        if (isAuth) {
+            history.replace("/users");
+        }
+    }, []);
     const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
     const [data, setData] = useState({
@@ -95,7 +102,7 @@ function RegisterForm() {
         if (!isValid) return;
         const newData = {
             ...data,
-            qualities: data.qualities.map((q) => q.value),
+            qualities: data.qualities?.map((q) => q.value),
             bookmark: [],
             completedMeetings: randomInt(0, 200),
             rate: randomInt(1, 5)

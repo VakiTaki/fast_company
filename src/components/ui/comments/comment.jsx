@@ -6,7 +6,9 @@ import { getUserById } from "../../../store/usersSlice";
 import localStorageServise from "../../../service/localStorage.service";
 
 function Comment({ comment, onDelete }) {
-    const currentUser = { _id: localStorageServise.getUserId() };
+    const currentUser = useSelector(
+        getUserById(localStorageServise.getUserId())
+    );
     const user = useSelector(getUserById(comment.userId));
     return (
         <div className="d-flex flex-start">

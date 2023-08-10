@@ -62,7 +62,6 @@ export const removeComment = (id) => async (dispatch, getState) => {
    try {
       const { content } = await commentsService.removeComment(id);
       dispatch(removedComment(id));
-      console.log(getState(0).comments.entities);
       return content;
    } catch (error) {
       dispatch(commentsRequestFiled(error.message));
@@ -72,5 +71,6 @@ export const removeComment = (id) => async (dispatch, getState) => {
 export const getComments = () => (state) => state.comments.entities;
 export const getCommentsLoadingStatus = () => (state) => state.comments.isLoading;
 export const getIsDataLoaded = () => (state) => state.comments.isDataLoaded;
+export const getCommentsError = () => (state) => state.comments.error;
 
 export default commentsReducer;

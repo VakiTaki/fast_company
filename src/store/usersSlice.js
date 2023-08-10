@@ -7,7 +7,7 @@ import { generateAuthErrors } from "../utils/generateAuthErrors";
 
 const initialState = localStorageServise.getUserId()
    ? { entities: [], isLoading: true, error: null, auth: null, isLoggedIn: true, isDataLoaded: false }
-   : { entities: [], isLoading: true, error: null, auth: null, isLoggedIn: false, isDataLoaded: false };
+   : { entities: [], isLoading: false, error: null, auth: null, isLoggedIn: false, isDataLoaded: false };
 
 const qualitiesSlice = createSlice({
    name: "users",
@@ -121,18 +121,26 @@ export const editUser = (data) => async (dispatch) => {
    try {
       const { content } = await userService.create(data);
       dispatch(editedUser(data));
-      console.log(content);
       history.push(`/users/${data._id}`);
       return content;
    } catch (error) {
       dispatch(createUserFiled(error.message));
    };
 };
+export const editUserBookmark = (data) => async (dispatch) => {
+   try {
+      const { content } = await userService.create(data);
+      dispatch(editedUser(data));
+      return content;
+   } catch (error) {
+      dispatch(createUserFiled(error.message));
+   };
+};
 
-export const isDataLoaded = () => (state) => state.users.isDataLoaded;
-export const isLoggedIn = () => (state) => state.users.isLoggedIn;
+export const getIsDataLoaded = () => (state) => state.users.isDataLoaded;
+export const getIsLoading = () => (state) => state.users.isLoading;
+export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getUsers = () => (state) => state.users.entities;
-export const getQualitiesLoadingStatus = () => (state) => state.qualities.isLoading;
 export const getUserById = (id) => (state) => {
    if (state.users.entities) {
       return state.users.entities.find((q) => q._id === id);

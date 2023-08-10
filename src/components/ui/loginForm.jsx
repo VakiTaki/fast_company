@@ -3,11 +3,18 @@ import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn, getUsersError } from "../../store/usersSlice";
+import { signIn, getUsersError, getIsLoggedIn } from "../../store/usersSlice";
 import history from "../../utils/histoty";
 
 function LoginForm() {
     const dispatch = useDispatch();
+    const isAuth = useSelector(getIsLoggedIn());
+    useEffect(() => {
+        if (isAuth) {
+            history.replace("/users");
+        }
+    }, []);
+
     const [data, setData] = useState({
         email: "",
         password: "",

@@ -2,9 +2,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import localStorageServise from "../../../service/localStorage.service";
+import { useSelector } from "react-redux";
+import { getUserById } from "../../../store/usersSlice";
 
 function UserCard({ user }) {
-    const currentUser = { _id: localStorageServise.getUserId() };
+    const currentUser = useSelector(
+        getUserById(localStorageServise.getUserId())
+    );
     const history = useHistory();
     const handleToUserEditPage = () => {
         history.push(history.location.pathname + `/edit`);
@@ -35,15 +39,19 @@ function UserCard({ user }) {
                             {user.profession.name}
                         </p>
                         <div className="text-muted">
-                            <i
-                                className="bi bi-caret-down-fill text-primary"
-                                role="button"
-                            ></i>
-                            <i
-                                className="bi bi-caret-up text-secondary"
-                                role="button"
-                            ></i>
-                            <span className="ms-2">{user.rate}</span>
+                            {currentUser._id !== user._id && (
+                                <>
+                                    <i
+                                        className="bi bi-caret-down-fill text-primary"
+                                        role="button"
+                                    ></i>
+                                    <i
+                                        className="bi bi-caret-up text-secondary"
+                                        role="button"
+                                    ></i>
+                                </>
+                            )}
+                            <span className="ms-2">Pейтинг: {user.rate}</span>
                         </div>
                     </div>
                 </div>

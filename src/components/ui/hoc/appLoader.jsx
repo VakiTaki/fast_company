@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import {
-    isDataLoaded,
-    isLoggedIn,
+    getIsLoading,
+    getIsLoggedIn,
     loadUserList
 } from "../../../store/usersSlice";
 import { loadQualitiesList } from "../../../store/qualitiesSlice";
@@ -11,15 +11,16 @@ import { loadProfessionsList } from "../../../store/professionsSlice";
 
 function AppLoader({ children }) {
     const dispatch = useDispatch();
-    const dataStatus = useSelector(isDataLoaded());
-    const isAuth = useSelector(isLoggedIn());
+    const isLoading = useSelector(getIsLoading());
+    const isAuth = useSelector(getIsLoggedIn());
     useEffect(() => {
         dispatch(loadQualitiesList());
         dispatch(loadProfessionsList());
-        if (!dataStatus && isAuth) {
+        if (isAuth) {
             dispatch(loadUserList());
         }
     }, []);
+    if (isLoading) return;
     return children;
 }
 

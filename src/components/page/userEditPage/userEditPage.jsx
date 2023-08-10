@@ -11,11 +11,14 @@ import {
     getProfessions
 } from "../../../store/professionsSlice";
 import { getUserById } from "../../../store/usersSlice";
+import localStorageServise from "../../../service/localStorage.service";
 
 function UserEditPage() {
     const history = useHistory();
     const { id } = useParams();
-    const currentUser = useSelector(getUserById(id));
+    const currentUser = useSelector(
+        getUserById(localStorageServise.getUserId())
+    );
     useEffect(() => {
         if (id !== currentUser._id) {
             history.push(`/users/${currentUser._id}/edit`);

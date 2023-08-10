@@ -50,8 +50,7 @@ apiURL.interceptors.response.use(
          error.response.status >= 400 &&
          error.response.status >= 400;
       if (!expectedErrors) {
-         toast.dark("Error");
-         toast("Unexpected errors");
+         toast.error("Ошибка сети");
       }
       return Promise.reject(error);
    }

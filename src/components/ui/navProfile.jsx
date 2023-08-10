@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserById } from "../../store/usersSlice";
 import localStorageServise from "../../service/localStorage.service";
+import LogOut from "../../layouts/logOut";
 
 function NavProfile() {
     const currentUser = useSelector(
@@ -17,7 +18,7 @@ function NavProfile() {
     };
     return (
         <>
-            {currentUser && (
+            {currentUser ? (
                 <div className="dropdown" onClick={() => toggleMenu()}>
                     <div className="btn dropdown-toggle d-flex align-items-center">
                         <div className="me-2">{currentUser.name}</div>
@@ -44,6 +45,8 @@ function NavProfile() {
                         </Link>
                     </div>
                 </div>
+            ) : (
+                <LogOut />
             )}
         </>
     );
