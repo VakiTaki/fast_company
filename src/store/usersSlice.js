@@ -26,8 +26,12 @@ const qualitiesSlice = createSlice({
          state.error = action.payload;
          state.isLoading = false;
       },
+      authRequested(state) {
+         state.isLoading = true;
+      },
       authRequestSuccess(state, action) {
          state.auth = action.payload;
+         state.isLoading = false;
          state.isLoggedIn = true;
          state.error = null;
       },
@@ -37,9 +41,10 @@ const qualitiesSlice = createSlice({
       },
       createdUser(state, action) {
          state.entities.push(action.payload);
+         state.isLoading = false;
       },
       createUserRequested(state) {
-         state.isLoading = false;
+         state.isLoading = true;
       },
       createUserFiled(state, action) {
          state.error = action.payload;
@@ -59,9 +64,10 @@ const qualitiesSlice = createSlice({
 });
 
 const { reducer: usersReducer, actions } = qualitiesSlice;
-const { usersRequested, usersReceved, usersRequestFiled, authRequestSuccess, authRequestFiled, createUserRequested, createUserFiled, createdUser, logOuted, editedUser } = actions;
+const { usersRequested, usersReceved, usersRequestFiled, authRequested, authRequestSuccess, authRequestFiled, createUserRequested, createUserFiled, createdUser, logOuted, editedUser } = actions;
 
 export const signIn = ({ email, password, ...rest }, redirect) => async (dispath) => {
+   dispath(authRequested());
    try {
       const data = await authService.login({ email, password });
       localStorageServise.setTokens(data);
@@ -73,6 +79,7 @@ export const signIn = ({ email, password, ...rest }, redirect) => async (dispath
    }
 };
 export const signUp = ({ email, password, ...rest }) => async (dispath) => {
+   dispath(authRequested());
    try {
       const data = await authService.register({ email, password });
       localStorageServise.setTokens(data);
