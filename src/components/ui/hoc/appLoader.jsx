@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../../../store/usersSlice";
 import { loadQualitiesList } from "../../../store/qualitiesSlice";
 import { loadProfessionsList } from "../../../store/professionsSlice";
+import Loader from "../../common/loader";
 
 function AppLoader({ children }) {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function AppLoader({ children }) {
             dispatch(loadUserList());
         }
     }, []);
-    if (isLoading) return;
+    if (isLoading) return <Loader />;
     return children;
 }
 

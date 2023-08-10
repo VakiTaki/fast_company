@@ -35,8 +35,8 @@ function UsersTable({ userCrop, onToogleBookmark, onSort, selectedSort }) {
             name: "Встретился, раз"
         },
         rate: { path: "rate", name: "Рейтинг" },
-        bookmark: {
-            path: "bookmark",
+        bookmarks: {
+            path: "bookmarks",
             name: "Избранное",
             component: (user) => (
                 <Bookmark user={user} onToogleBookmark={onToogleBookmark} />

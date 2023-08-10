@@ -28,7 +28,10 @@ const UsersListPage = () => {
     let users = useSelector(getUsers());
     users = users.map((user) => ({
         ...user,
-        rate: useSelector(getRateForId(user._id))
+        rate: useSelector(getRateForId(user._id)),
+        bookmarks: currentUser.bookmark
+            ? currentUser.bookmark.some((u) => u === user._id)
+            : false
     }));
     const allProfession = { _id: "0", name: "Все профессии" };
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
@@ -58,9 +61,6 @@ const UsersListPage = () => {
     useEffect(() => {
         setProfessionsList([...profession, allProfession]);
     }, [profession]);
-    function handlerDelete(id) {
-        console.log(id);
-    }
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
@@ -87,15 +87,6 @@ const UsersListPage = () => {
             ? setSelectedProf(allProfession)
             : setSelectedProf(item);
         setCurrentPage(1);
-    };
-    const handleResetUsers = () => {
-        // setProfessionsList();
-        // api.professionsList.fetchAll().then((data) =>
-        //     setProfessionsList({
-        //         allProfession,
-        //         ...data
-        //     })
-        // );
     };
     const handleSort = (prop) => {
         if (sortBy.iter === prop) {
@@ -156,15 +147,6 @@ const UsersListPage = () => {
                 <div className="mt-2">
                     <div className="d-flex justify-content-between">
                         <PartyMsg numUsers={count} />
-                        {!users.length && (
-                            <button
-                                type="button"
-                                className="btn btn-warning"
-                                onClick={handleResetUsers}
-                            >
-                                Reset
-                            </button>
-                        )}
                     </div>
                     <div className="d-flex">
                         {!!users.length && (
@@ -186,7 +168,6 @@ const UsersListPage = () => {
                                         />
                                         <UsersTable
                                             userCrop={userCrop}
-                                            onDelete={handlerDelete}
                                             onToogleBookmark={
                                                 handleToogleBookmark
                                             }

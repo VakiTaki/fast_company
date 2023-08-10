@@ -20,7 +20,7 @@ function UsersLoader({ children }) {
             dispatch(loadUserList());
         }
     }, []);
-    if (!dataStatus && isLoading) return "Загрузка User";
+    if (!dataStatus && isLoading) return;
     dispatch(addRateList());
 
     return <>{currentUserId ? children : <LogOut />}</>;
