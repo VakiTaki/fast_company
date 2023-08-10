@@ -13,7 +13,6 @@ function UsersLoader({ children }) {
     const dispatch = useDispatch();
     const dataStatus = useSelector(getIsDataLoaded());
     const isLoading = useSelector(getIsLoading());
-    console.log(!dataStatus && isLoading);
     const currentUserId = localStorageServise.getUserId();
     useEffect(() => {
         if (!dataStatus) {
