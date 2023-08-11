@@ -15,8 +15,17 @@ import {
     clearError
 } from "../../store/usersSlice";
 import history from "../../utils/histoty";
+import _ from "lodash";
 
 function RegisterForm() {
+    const initialState = {
+        name: "",
+        email: "",
+        password: "",
+        profession: "",
+        qualities: [],
+        licence: false
+    };
     const dispatch = useDispatch();
     const isAuth = useSelector(getIsLoggedIn());
     useEffect(() => {
@@ -27,18 +36,15 @@ function RegisterForm() {
     }, []);
     const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
-    const [data, setData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        profession: "",
-        qualities: [],
-        licence: false
-    });
+    const [data, setData] = useState(initialState);
     const registerError = useSelector(getUsersError());
     const [errors, setErrors] = useState({});
     useEffect(() => {
-        validate();
+        if (!_.isEqual(data, initialState)) {
+            validate();
+        } else {
+            setErrors({});
+        }
     }, [data]);
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
@@ -92,7 +98,8 @@ function RegisterForm() {
         setErrors(errors);
         return !Object.keys(errors).length;
     };
-    const isValid = !Object.keys(errors).length;
+    const isValid =
+        !Object.keys(errors).length && !_.isEqual(data, initialState);
     const professionToOptions = () => {
         return profession.map((prof) => {
             return { label: prof.name, value: prof._id };

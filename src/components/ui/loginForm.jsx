@@ -10,8 +10,14 @@ import {
     clearError
 } from "../../store/usersSlice";
 import history from "../../utils/histoty";
+import _ from "lodash";
 
 function LoginForm() {
+    const initialState = {
+        email: "",
+        password: "",
+        stayOn: false
+    };
     const dispatch = useDispatch();
     const isAuth = useSelector(getIsLoggedIn());
     useEffect(() => {
@@ -20,16 +26,15 @@ function LoginForm() {
         }
         if (loginError) dispatch(clearError());
     }, []);
-
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        stayOn: false
-    });
+    const [data, setData] = useState(initialState);
     const loginError = useSelector(getUsersError());
     const [errors, setErrors] = useState({});
     useEffect(() => {
-        validate();
+        if (!_.isEqual(data, initialState)) {
+            validate();
+        } else {
+            setErrors({});
+        }
     }, [data]);
     const handleChange = (target) => {
         if (loginError) dispatch(clearError());
@@ -65,7 +70,8 @@ function LoginForm() {
         setErrors(errors);
         return !Object.keys(errors).length;
     };
-    const isValid = !Object.keys(errors).length;
+    const isValid =
+        !Object.keys(errors).length && !_.isEqual(data, initialState);
     const handleSubmit = (e) => {
         e.preventDefault();
         const redirect = history.location.state
