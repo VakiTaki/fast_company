@@ -8,7 +8,12 @@ import { randomInt } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getQialities } from "../../store/qualitiesSlice";
 import { getProfessions } from "../../store/professionsSlice";
-import { signUp, getUsersError, getIsLoggedIn } from "../../store/usersSlice";
+import {
+    signUp,
+    getUsersError,
+    getIsLoggedIn,
+    clearError
+} from "../../store/usersSlice";
 import history from "../../utils/histoty";
 
 function RegisterForm() {
@@ -18,6 +23,7 @@ function RegisterForm() {
         if (isAuth) {
             history.replace("/users");
         }
+        dispatch(clearError());
     }, []);
     const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
@@ -36,6 +42,7 @@ function RegisterForm() {
     }, [data]);
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
+        dispatch(clearError());
     };
     const validatorConfig = {
         name: {

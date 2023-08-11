@@ -60,12 +60,15 @@ const qualitiesSlice = createSlice({
       editedUser(state, action) {
          const index = state.entities.findIndex(user => user._id === action.payload._id);
          state.entities[index] = action.payload;
+      },
+      clearedError(state) {
+         state.error = null;
       }
    }
 });
 
 const { reducer: usersReducer, actions } = qualitiesSlice;
-const { usersRequested, usersReceved, usersRequestFiled, authRequested, authRequestSuccess, authRequestFiled, createUserRequested, createUserFiled, createdUser, logOuted, editedUser } = actions;
+const { usersRequested, usersReceved, usersRequestFiled, authRequested, authRequestSuccess, authRequestFiled, createUserRequested, createUserFiled, createdUser, logOuted, editedUser, clearedError } = actions;
 
 export const signIn = ({ email, password, ...rest }, redirect) => async (dispath) => {
    dispath(authRequested());
@@ -143,6 +146,9 @@ export const editUserBookmark = (data) => async (dispatch) => {
    } catch (error) {
       dispatch(createUserFiled(error.message));
    };
+};
+export const clearError = () => dispatch => {
+   dispatch(clearedError());
 };
 
 export const getIsDataLoaded = () => (state) => state.users.isDataLoaded;

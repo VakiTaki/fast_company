@@ -3,7 +3,12 @@ import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn, getUsersError, getIsLoggedIn } from "../../store/usersSlice";
+import {
+    signIn,
+    getUsersError,
+    getIsLoggedIn,
+    clearError
+} from "../../store/usersSlice";
 import history from "../../utils/histoty";
 
 function LoginForm() {
@@ -13,6 +18,7 @@ function LoginForm() {
         if (isAuth) {
             history.replace("/users");
         }
+        dispatch(clearError());
     }, []);
 
     const [data, setData] = useState({
@@ -26,6 +32,7 @@ function LoginForm() {
         validate();
     }, [data]);
     const handleChange = (target) => {
+        dispatch(clearError());
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {

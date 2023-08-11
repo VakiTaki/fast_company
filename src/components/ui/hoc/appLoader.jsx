@@ -21,8 +21,17 @@ function AppLoader({ children }) {
             dispatch(loadUserList());
         }
     }, []);
-    if (isLoading) return <Loader />;
-    return children;
+    return (
+        <div className="position-relative">
+            <div className="z-1"></div>
+            {children}
+            {isLoading && (
+                <div className="z-2 fixed-top w-100 h-100 bg-black bg-opacity-25">
+                    <Loader />
+                </div>
+            )}
+        </div>
+    );
 }
 
 AppLoader.propTypes = {
