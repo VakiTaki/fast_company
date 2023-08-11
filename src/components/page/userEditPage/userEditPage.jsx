@@ -11,6 +11,7 @@ import {
     getProfessions
 } from "../../../store/professionsSlice";
 import { getAuthId, getUserById } from "../../../store/usersSlice";
+import UsersLoader from "../../ui/hoc/usersLoader";
 
 function UserEditPage() {
     const history = useHistory();
@@ -18,8 +19,8 @@ function UserEditPage() {
     const authId = useSelector(getAuthId());
     const currentUser = useSelector(getUserById(authId));
     useEffect(() => {
-        if (id !== currentUser._id) {
-            history.push(`/users/${currentUser._id}/edit`);
+        if (id !== authId) {
+            history.push(`/users/${authId}/edit`);
         }
     }, []);
     const profession = useSelector(getProfessions());
@@ -27,19 +28,21 @@ function UserEditPage() {
     const qualities = useSelector(getQialities());
     const qualitiesIsLoading = useSelector(getQualitiesLoadingStatus());
     return (
-        <div className="conteiner mt-5 ">
-            <div className="row">
-                {!professionsIsLoading && !qualitiesIsLoading && (
-                    <div className="col-md-6 offset-md-3 shadow p-4">
-                        <EditUserForm
-                            user={currentUser}
-                            professions={profession}
-                            qualities={qualities}
-                        />
-                    </div>
-                )}
+        <UsersLoader>
+            <div className="conteiner mt-5 ">
+                <div className="row">
+                    {!professionsIsLoading && !qualitiesIsLoading && (
+                        <div className="col-md-6 offset-md-3 shadow p-4">
+                            <EditUserForm
+                                user={currentUser}
+                                professions={profession}
+                                qualities={qualities}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </UsersLoader>
     );
 }
 

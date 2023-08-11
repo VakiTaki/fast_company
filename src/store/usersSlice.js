@@ -6,7 +6,7 @@ import history from "../utils/histoty";
 import { generateAuthErrors } from "../utils/generateAuthErrors";
 
 const initialState = localStorageServise.getUserId()
-   ? { entities: [], isLoading: true, error: null, auth: null, isLoggedIn: true, isDataLoaded: false, isLoadingAuth: false }
+   ? { entities: [], isLoading: true, error: null, auth: localStorageServise.getUserId(), isLoggedIn: true, isDataLoaded: false, isLoadingAuth: false }
    : { entities: [], isLoading: false, error: null, auth: null, isLoggedIn: false, isDataLoaded: false, isLoadingAuth: false };
 
 const qualitiesSlice = createSlice({

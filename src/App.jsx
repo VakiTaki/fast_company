@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
 import Users from "./layouts/users";
@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
 import AppLoader from "./components/ui/hoc/appLoader";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
     return (
