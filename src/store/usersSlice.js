@@ -6,8 +6,8 @@ import history from "../utils/histoty";
 import { generateAuthErrors } from "../utils/generateAuthErrors";
 
 const initialState = localStorageServise.getUserId()
-   ? { entities: [], isLoading: true, error: null, auth: null, isLoggedIn: true, isDataLoaded: false }
-   : { entities: [], isLoading: false, error: null, auth: null, isLoggedIn: false, isDataLoaded: false };
+   ? { entities: [], isLoading: true, error: null, auth: null, isLoggedIn: true, isDataLoaded: false, isLoadingAuth: false }
+   : { entities: [], isLoading: false, error: null, auth: null, isLoggedIn: false, isDataLoaded: false, isLoadingAuth: false };
 
 const qualitiesSlice = createSlice({
    name: "users",
@@ -27,17 +27,18 @@ const qualitiesSlice = createSlice({
          state.isLoading = false;
       },
       authRequested(state) {
-         state.isLoading = true;
+         state.isLoadingAuth = true;
       },
       authRequestSuccess(state, action) {
          state.auth = action.payload;
-         state.isLoading = false;
+         state.isLoadingAuth = false;
          state.isLoggedIn = true;
          state.error = null;
       },
       authRequestFiled(state, action) {
          state.error = action.payload;
          state.isLoggedIn = false;
+         state.isLoadingAuth = false;
       },
       createdUser(state, action) {
          state.entities.push(action.payload);
