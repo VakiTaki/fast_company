@@ -23,7 +23,7 @@ function RegisterForm() {
         if (isAuth) {
             history.replace("/users");
         }
-        dispatch(clearError());
+        if (registerError) dispatch(clearError());
     }, []);
     const profession = useSelector(getProfessions());
     const qualities = useSelector(getQialities());
@@ -42,7 +42,7 @@ function RegisterForm() {
     }, [data]);
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
-        dispatch(clearError());
+        if (registerError) dispatch(clearError());
     };
     const validatorConfig = {
         name: {

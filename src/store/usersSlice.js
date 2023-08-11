@@ -75,7 +75,7 @@ export const signIn = ({ email, password, ...rest }, redirect) => async (dispath
    try {
       const data = await authService.login({ email, password });
       localStorageServise.setTokens(data);
-      dispath(authRequestSuccess(data));
+      dispath(authRequestSuccess((data.localId)));
       history.push(redirect);
    } catch (error) {
       const errorMessage = generateAuthErrors(error.response.data.error);
@@ -87,7 +87,7 @@ export const signUp = ({ email, password, ...rest }) => async (dispath) => {
    try {
       const data = await authService.register({ email, password });
       localStorageServise.setTokens(data);
-      dispath(authRequestSuccess(data));
+      dispath(authRequestSuccess(data.localId));
       dispath(createUser({
          _id: data.localId,
          email,
@@ -145,12 +145,14 @@ export const editUserBookmark = (data) => async (dispatch) => {
       return content;
    } catch (error) {
       dispatch(createUserFiled(error.message));
+      history.replace("/login");
    };
 };
 export const clearError = () => dispatch => {
    dispatch(clearedError());
 };
 
+export const getAuthId = () => (state) => state.users.auth;
 export const getIsDataLoaded = () => (state) => state.users.isDataLoaded;
 export const getIsLoading = () => (state) => state.users.isLoading;
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;

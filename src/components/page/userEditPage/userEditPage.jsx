@@ -10,15 +10,13 @@ import {
     getProfessionsLoadingStatus,
     getProfessions
 } from "../../../store/professionsSlice";
-import { getUserById } from "../../../store/usersSlice";
-import localStorageServise from "../../../service/localStorage.service";
+import { getAuthId, getUserById } from "../../../store/usersSlice";
 
 function UserEditPage() {
     const history = useHistory();
     const { id } = useParams();
-    const currentUser = useSelector(
-        getUserById(localStorageServise.getUserId())
-    );
+    const authId = useSelector(getAuthId());
+    const currentUser = useSelector(getUserById(authId));
     useEffect(() => {
         if (id !== currentUser._id) {
             history.push(`/users/${currentUser._id}/edit`);

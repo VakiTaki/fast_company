@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import localStorageServise from "../../service/localStorage.service";
-import { getUserById, editUserBookmark } from "../../store/usersSlice";
+import {
+    getUserById,
+    editUserBookmark,
+    getAuthId
+} from "../../store/usersSlice";
 import { addRateList } from "../../store/ratesSlice";
 
 const starsInitialState = [
@@ -16,9 +19,8 @@ const starsInitialState = [
 function RatesEdit() {
     const { id: userId } = useParams();
     const dispatch = useDispatch();
-    const currentUser = useSelector(
-        getUserById(localStorageServise.getUserId())
-    );
+    const authId = useSelector(getAuthId());
+    const currentUser = useSelector(getUserById(authId));
     const rate = currentUser.rates?.find(
         (rate) => rate.userId === userId
     )?.rate;

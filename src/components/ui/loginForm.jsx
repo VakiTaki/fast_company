@@ -18,7 +18,7 @@ function LoginForm() {
         if (isAuth) {
             history.replace("/users");
         }
-        dispatch(clearError());
+        if (loginError) dispatch(clearError());
     }, []);
 
     const [data, setData] = useState({
@@ -32,7 +32,7 @@ function LoginForm() {
         validate();
     }, [data]);
     const handleChange = (target) => {
-        dispatch(clearError());
+        if (loginError) dispatch(clearError());
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     const validatorConfig = {

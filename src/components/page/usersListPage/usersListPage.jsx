@@ -11,17 +11,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfessions } from "../../../store/professionsSlice";
 import {
     editUserBookmark,
+    getAuthId,
     getUserById,
     getUsers
 } from "../../../store/usersSlice";
-import localStorageServise from "../../../service/localStorage.service";
 import { getRateForId } from "../../../store/ratesSlice";
 
 const UsersListPage = () => {
     const dispatch = useDispatch();
-    const currentUser = useSelector(
-        getUserById(localStorageServise.getUserId())
-    );
+    const authId = useSelector(getAuthId());
+    const currentUser = useSelector(getUserById(authId));
     const timeout = useRef();
     const [searchText, setSearchText] = useState("");
     const [searchTextDelay, setSearchTextDelay] = useState("");

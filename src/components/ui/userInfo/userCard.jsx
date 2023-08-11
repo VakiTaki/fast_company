@@ -1,16 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import localStorageServise from "../../../service/localStorage.service";
 import { useSelector } from "react-redux";
-import { getUserById } from "../../../store/usersSlice";
+import { getUserById, getAuthId } from "../../../store/usersSlice";
 import RatesEdit from "../ratesEdit";
 import { getRateForId } from "../../../store/ratesSlice";
 
 function UserCard({ user }) {
-    const currentUser = useSelector(
-        getUserById(localStorageServise.getUserId())
-    );
+    const authId = useSelector(getAuthId());
+    const currentUser = useSelector(getUserById(authId));
     const rate = useSelector(getRateForId(user._id)) || "Нет оценок";
     const history = useHistory();
     const handleToUserEditPage = () => {
